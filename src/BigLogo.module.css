@@ -1,19 +1,22 @@
 .wrapper{
     display: flex;
-    flex-direction: column;
-    font-family: 'Inter';
-}
-
-.logo{
-    display: flex;
     flex-direction: row;
-    gap: 50px;
     align-items: center;
+    justify-content: center;
+    gap: 50px;
+    font-family: 'Inter';
 }
 
 .icon{
     height: 100px;
     width: 100px;
+}
+
+.name_comment_wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 150px;
 }
 
 .company_name{

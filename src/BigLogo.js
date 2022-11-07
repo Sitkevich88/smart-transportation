@@ -4,11 +4,11 @@ import styles from './BigLogo.module.css';
 const BigLogo = () => {
     return (<>
         <div className={styles.wrapper}>
-            <div className={styles.logo}>
-                <img src={logotype} alt="Logo" className={styles.icon}/>
+            <img src={logotype} alt="Logo" className={styles.icon}/>
+            <div className={styles.name_comment_wrapper}>
                 <h1 className={styles.company_name}>Smart transportation</h1>
+                <p className={styles.comment}>Логистический оператор</p>
             </div>
-            <p className={styles.comment}>Логистический оператор</p>
         </div>
     </>);
 }
