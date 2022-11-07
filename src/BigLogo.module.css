@@ -1,0 +1,32 @@
+.wrapper{
+    display: flex;
+    flex-direction: column;
+    font-family: 'Inter';
+}
+
+.logo{
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    align-items: center;
+}
+
+.icon{
+    height: 100px;
+    width: 100px;
+}
+
+.company_name{
+    text-transform: uppercase;
+    color: #1C12DB;
+    font-size: 72px;
+    font-weight: bold;
+    padding: 0;
+    margin: 0;
+}
+
+.comment{
+    margin: 0 auto;
+    color: #1C12DB;
+    font-size: 24px;
+}

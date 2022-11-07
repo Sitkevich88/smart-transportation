@@ -1,0 +1,13 @@
+.ellipse-purple{
+    position: absolute;
+    width: 919px;
+    height: 1009px;
+    left: -456px;
+    top: 190px;
+    border-radius: 50% 40%;
+
+    background: #370A80;
+    mix-blend-mode: darken;
+    filter: blur(9px);
+    transform: skew(-15deg, 0deg);
+}
