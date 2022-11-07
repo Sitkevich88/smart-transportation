@@ -14,6 +14,11 @@ const StartPage = () => {
             <div className={styles.ellipse} id={styles["ellipseRight"]}></div>
         </div>
         <MapPreview/>
+        <p className={styles.comment} id={styles["advice"]}>Чтобы оставить заявку на доставку, нужно войти в аккаунт.</p>
+        <div className={styles.contacts}>
+            <p className={styles.comment}>Желаете связаться с оператором?</p>
+            <p className={styles.comment}>+7(911)222-33-44</p>
+        </div>
     </>);
 }
 

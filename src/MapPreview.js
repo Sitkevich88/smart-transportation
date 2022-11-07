@@ -213,9 +213,18 @@ const MapPreview = () => {
             station_id: 19
         }
     ];
+
+    const w = document.querySelector('#canvas');
+    console.log(w);
+
+    function drawStation(station) {
+
+    }
+
+
     return (<div className={styles.wrapper}>
         <p className={styles.tittle}>Мы работаем по всей области</p>
-        <div className={styles.canvas}>
+        <div className={styles.canvas} id="canvas">
 
         </div>
     </div>);

@@ -7,14 +7,14 @@
 }
 
 .button{
-    width: 300px;
-    height: 42px;
+    width: 280px;
+    height: 30px;
     border: 3px solid #1C12DB;
     border-radius: 20px;
     background-color: #1C12DB;
     color: white;
     font-family: 'Inter';
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
 }
 .button:hover {
@@ -58,4 +58,25 @@
     left: 65%;
     top: 10%;
     transform: skew(-10deg, 0deg);
+}
+
+.comment{
+    font-family: 'Inter';
+    font-weight: bold;
+}
+
+#advice{
+    margin: 10px 0;
+    text-align: center;
+}
+
+.contacts{
+    position: fixed;
+    bottom: 0;
+    right: 30px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: flex-end;
+    gap: 30px;
 }

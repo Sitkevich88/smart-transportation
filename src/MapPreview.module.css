@@ -3,20 +3,20 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    margin-top: 30px;
+    margin-top: 20px;
 }
 
 .tittle{
     margin: 0 auto;
     font-family: Inter;
     font-weight: bold;
-    font-size: 30px;
+    font-size: 20px;
 }
 
 .canvas{
     display: block;
-    width: 790px;
-    height: 550px;
+    width: 630px;
+    height: 440px;
     border-radius: 20px;
     border: 5px solid #2E6415;
     background-color: rgba(213, 227, 206, 0.7);
