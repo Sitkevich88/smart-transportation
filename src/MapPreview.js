@@ -1,4 +1,5 @@
 import styles from "./MapPreview.module.css";
+import React from "react";
 
 const MapPreview = () => {
     const stations = [
@@ -213,21 +214,48 @@ const MapPreview = () => {
             station_id: 19
         }
     ];
+    const canvas = React.createRef();
 
-    const w = document.querySelector('#canvas');
-    console.log(w);
+    normaliseStations(stations, 630, 440); //todo get width and height of canvas
+    const points = getPointsFromStations(stations, trainLines);
 
-    function drawStation(station) {
-
-    }
-
-
-    return (<div className={styles.wrapper}>
+    const html = (<div className={styles.wrapper}>
         <p className={styles.tittle}>Мы работаем по всей области</p>
-        <div className={styles.canvas} id="canvas">
-
+        <div className={styles.canvas} id="canvas" ref={canvas}>
+            <svg className={styles.svg}>
+                {points}
+            </svg>
         </div>
     </div>);
+
+    return html;
+}
+
+function normaliseStations(stations, width, height){
+    const minX = Math.min(...stations.map(station => station.x));
+    const maxX = Math.max(...stations.map(station => station.x));
+    const minY = Math.min(...stations.map(station => station.y));
+    const maxY = Math.max(...stations.map(station => station.y));
+
+    const proportion = 0.8;
+    const scaleX = (maxX - minX) / (width * proportion);
+    const scaleY = (maxY - minY) / (height * proportion);
+
+    stations.forEach(station => { //todo forEach
+       station.x = (station.x - minX) / scaleX + width * (1 - proportion) / 2;
+       station.y = (station.y - minY) / scaleY + height * (1 - proportion) / 2;
+    });
+}
+
+function getPointsFromStations(stations, trainLines){
+    const points = [];
+    stations.forEach(st => {
+        points.push((<circle cx={st.x} cy={st.y} r={10} style={{
+            fill: trainLines.find(line => st.line_id === line.id).name
+        }} key={st.id}/>));
+    });
+
+    return points;
 }
 
 export default MapPreview;
