@@ -218,11 +218,13 @@ const MapPreview = () => {
 
     normaliseStations(stations, 630, 440); //todo get width and height of canvas
     const points = getPointsFromStations(stations, trainLines);
+    const lines = getLinesFromStations(stations, trainLines);
 
     const html = (<div className={styles.wrapper}>
         <p className={styles.tittle}>Мы работаем по всей области</p>
         <div className={styles.canvas} id="canvas" ref={canvas}>
             <svg className={styles.svg}>
+                {lines}
                 {points}
             </svg>
         </div>
@@ -241,21 +243,46 @@ function normaliseStations(stations, width, height){
     const scaleX = (maxX - minX) / (width * proportion);
     const scaleY = (maxY - minY) / (height * proportion);
 
-    stations.forEach(station => { //todo forEach
-       station.x = (station.x - minX) / scaleX + width * (1 - proportion) / 2;
-       station.y = (station.y - minY) / scaleY + height * (1 - proportion) / 2;
+    stations.forEach(station => {
+       station.x = (station.x - minX) / scaleX + (width * (1 - proportion) / 2);
+       station.y = (station.y - minY) / scaleY + (height * (1 - proportion) / 2);
     });
 }
 
 function getPointsFromStations(stations, trainLines){
     const points = [];
     stations.forEach(st => {
-        points.push((<circle cx={st.x} cy={st.y} r={10} style={{
+        points.push(<circle cx={st.x} cy={st.y} r={10} style={{
             fill: trainLines.find(line => st.line_id === line.id).name
-        }} key={st.id}/>));
+        }} key={st.id}/>);
     });
 
     return points;
+}
+
+function getLinesFromStations(stations, trainLines){
+    const linesMap = new Map();
+    const lines = [];
+    const trainLinesIds = [];
+
+    stations.forEach(st => {
+        const lineId = st.line_id;
+
+        if (!linesMap.has(lineId)) {
+            linesMap.set(lineId, []);
+            trainLinesIds.push(lineId)
+        }
+
+        linesMap.get(lineId).push(st.x + ',' + st.y);
+    });
+
+    trainLinesIds.forEach(lineId => {
+        const color = trainLines.find(line => lineId === line.id).color;
+        const values = linesMap.get(lineId).join(' ');
+        lines.push(<polyline points={values} fill="none" stroke={color}  strokeWidth={10} />)
+    })
+
+    return lines;
 }
 
 export default MapPreview;
