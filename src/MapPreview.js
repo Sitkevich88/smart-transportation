@@ -5,14 +5,15 @@ import mapLines from './map/trainLines.json';
 import mapIntersections from './map/intersections.json';
 
 const MapPreview = () => {
-    const stations = mapStations;
-    const trainLines = mapLines;
-    const intersections = mapIntersections;
+    const stations: Array = mapStations;
+    const trainLines: Array = mapLines;
+    const intersections: Array = mapIntersections;
     const canvas = React.createRef();
 
     normaliseStations(stations, 630, 440); //todo get width and height of canvas
-    const points = getPointsFromStations(stations, trainLines, intersections);
-    const lines = getLinesFromStations(stations, trainLines);
+    const points = getSVGPoints(stations, trainLines, intersections);
+    const lines = getSVGLines(stations, trainLines);
+    const names = getSVGTexts(stations);
 
     return (<div className={styles.wrapper}>
         <p className={styles.tittle}>Мы работаем по всей области</p>
@@ -20,6 +21,7 @@ const MapPreview = () => {
             <svg className={styles.svg}>
                 {lines}
                 {points}
+                {names}
             </svg>
         </div>
     </div>);
@@ -41,7 +43,7 @@ function normaliseStations(stations, width, height){
     });
 }
 
-function getPointsFromStations(stations, trainLines, intersections){
+function getSVGPoints(stations, trainLines, intersections){
     const points = [];
     const r = 10;
     const strokeWidth = 2;
@@ -82,7 +84,7 @@ function getPointsFromStations(stations, trainLines, intersections){
     return points;
 }
 
-function getLinesFromStations(stations, trainLines){
+function getSVGLines(stations, trainLines){
     const linesMap = new Map();
     const lines = [];
     const trainLinesIds = [];
@@ -105,6 +107,23 @@ function getLinesFromStations(stations, trainLines){
     })
 
     return lines;
+}
+
+function getSVGTexts(stations){
+    const names = [];
+    const texts = [];
+    const offsetX = -30;
+    const offsetY = -20;
+
+    stations.forEach(st => {
+        if (!names.find(n => n === st.name))
+            names.push(st.name);
+        else
+            return;
+
+        texts.push(<tspan x={st.x + offsetX} y={st.y + offsetY} >{st.name}</tspan>);
+    })
+    return <text className={styles.stations_names}>{texts}</text>;
 }
 
 export default MapPreview;
