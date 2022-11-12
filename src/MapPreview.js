@@ -162,22 +162,22 @@ const MapPreview = () => {
         {
             id: 1,
             name: "purple",
-            color: "#AA0077"
+            color: "#9f1ee0"
         },
         {
             id: 2,
             name: "blue",
-            color: "#0033CC"
+            color: "rgba(28,18,219,0.9)"
         },
         {
             id: 3,
             name: "red",
-            color: "#CC0011"
+            color: "#da1b2b"
         },
         {
             id: 4,
             name: "yellow",
-            color: "#888800"
+            color: "#f3f310"
         }
     ];
     const intersections = [
@@ -217,10 +217,10 @@ const MapPreview = () => {
     const canvas = React.createRef();
 
     normaliseStations(stations, 630, 440); //todo get width and height of canvas
-    const points = getPointsFromStations(stations, trainLines);
+    const points = getPointsFromStations(stations, trainLines, intersections);
     const lines = getLinesFromStations(stations, trainLines);
 
-    const html = (<div className={styles.wrapper}>
+    return (<div className={styles.wrapper}>
         <p className={styles.tittle}>Мы работаем по всей области</p>
         <div className={styles.canvas} id="canvas" ref={canvas}>
             <svg className={styles.svg}>
@@ -229,8 +229,6 @@ const MapPreview = () => {
             </svg>
         </div>
     </div>);
-
-    return html;
 }
 
 function normaliseStations(stations, width, height){
@@ -249,13 +247,45 @@ function normaliseStations(stations, width, height){
     });
 }
 
-function getPointsFromStations(stations, trainLines){
+function getPointsFromStations(stations, trainLines, intersections){
     const points = [];
+    const r = 15;
+    const strokeWidth = 2;
+    const offset = strokeWidth / 2;
+
     stations.forEach(st => {
-        points.push(<circle cx={st.x} cy={st.y} r={10} style={{
-            fill: trainLines.find(line => st.line_id === line.id).name
-        }} key={st.id}/>);
+        if (!intersections.find(intersection => st.id === intersection.station_id)) {
+            points.push(
+                <circle cx={st.x} cy={st.y} r={r} style={{
+                    fill: trainLines.find(line => st.line_id === line.id).name
+                }} key={st.id} stroke="black" strokeWidth={strokeWidth}/>
+            );
+        } else{
+            points.push(
+                <circle cx={st.x} cy={st.y} r={r} key={st.id} fillOpacity="0" stroke="black" strokeWidth={strokeWidth}/>
+            );
+        }
     });
+
+    function drawIntersection(intersectionId){
+        const intersectedStations = intersections
+            .filter(intersection => intersection.id === intersectionId)
+            .map(intersection => stations.find(st => st.id === intersection.station_id));
+
+        const x = intersectedStations.reduce((sum, st) => sum + st.x, 0) / intersectedStations.length;
+        const y = intersectedStations.reduce((sum, st) => sum + st.y, 0) / intersectedStations.length;
+
+        //todo пересечние больше двух линий
+        const strL = `M ${x} ${y-(r-offset)} A 1 1 0 0 0 ${x} ${y+(r-offset)} L ${x} ${y-(r-offset)} Z`;
+        const strR = `M ${x} ${y-(r-offset)} L ${x} ${y+(r-offset)} A 1 1 0 0 0 ${x} ${y-(r-offset)} Z`;
+
+        points.push(...[
+            (<path d={strL} key={intersectedStations[0].id} style={{fill: trainLines.find(line => intersectedStations[0].line_id === line.id).name}}/>),
+            (<path d={strR} key={intersectedStations[1].id} style={{fill: trainLines.find(line => intersectedStations[1].line_id === line.id).name}}/>)
+        ]);
+    }
+
+    new Set(intersections.map(intersection => intersection.id)).forEach(val => drawIntersection(val));
 
     return points;
 }
@@ -279,7 +309,7 @@ function getLinesFromStations(stations, trainLines){
     trainLinesIds.forEach(lineId => {
         const color = trainLines.find(line => lineId === line.id).color;
         const values = linesMap.get(lineId).join(' ');
-        lines.push(<polyline points={values} fill="none" stroke={color}  strokeWidth={10} />)
+        lines.push(<polyline points={values} fill="none" stroke={color}  strokeWidth={10} key={lineId} />)
     })
 
     return lines;
