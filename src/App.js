@@ -5,10 +5,12 @@ import {
     Link, BrowserRouter, Routes
 } from "react-router-dom";
 import StartPage from "./StartPage";
+import RegistrationPage from "./RegistrationPage";
 
 function App() {
     return (<BrowserRouter>
         <Routes>
+            <Route path="/registration" element={<RegistrationPage />} />
             <Route path="/" element={<StartPage />} />
         </Routes>
     </BrowserRouter>);
