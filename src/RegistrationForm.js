@@ -3,7 +3,7 @@ import {useNavigate} from 'react-router-dom';
 
 const RegistrationForm = () => {
     const navigate = useNavigate();
-    const register= () => navigate('/user/main');
+    const register = () => navigate('/user/main');
     const goToLogInPage = () => navigate('/login');
 
     return (<div className={styles.wrapper}>
