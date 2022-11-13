@@ -103,7 +103,7 @@ function getSVGLines(stations, trainLines){
     trainLinesIds.forEach(lineId => {
         const color = trainLines.find(line => lineId === line.id).color;
         const values = linesMap.get(lineId).join(' ');
-        lines.push(<polyline points={values} fill="none" stroke={color}  strokeWidth={10} key={lineId} />)
+        lines.push(<polyline points={values} fill="none" stroke={color} strokeWidth={10} opacity={0.8} key={lineId} />)
     })
 
     return lines;

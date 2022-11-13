@@ -29,6 +29,7 @@
 
 .stations_names{
     font-family: Inter;
+    text-shadow: 1px 1px 2px #c5d5d7;
     font-weight: bold;
     font-size: 15px;
 }
