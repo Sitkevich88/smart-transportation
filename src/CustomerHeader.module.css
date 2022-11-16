@@ -1,0 +1,40 @@
+.header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background-color: #9BAFF5;
+    margin: 0;
+    padding: 0;
+    height: 60px;
+    border-bottom: 1px solid black;
+}
+
+.menu{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 60%;
+}
+
+.button{
+    background-color: #1C12DB;
+    color: white;
+    height: 35px;
+    width: 30%;
+    border: 1px solid #1C12DB;
+    border-radius: 20px;
+    font-family: Inter;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.button:hover{
+    background-color: rgba(28, 18, 219, 0.85);
+}
+
+.logo{
+    margin-right: 10px;
+}

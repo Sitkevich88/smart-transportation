@@ -1,0 +1,79 @@
+.ellipses_wrapper{
+    z-index: -1;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.ellipse{
+    width: 70%;
+    height: 80%;
+    border-radius: 30% 30% 30% 50%;
+    mix-blend-mode: darken;
+    filter: blur(9px);
+    transform: skew(-12deg, 5deg);
+    z-index: -1;
+    overflow: hidden;
+    background-color: #370A80;
+    position: fixed;
+    left: 15%;
+    top: 13%;
+}
+
+.searchFieldsWrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 50%;
+    margin: 40px auto 20px auto;
+}
+
+.fieldLabelWrapper{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.searchFieldLabel{
+    font-family: 'Inter';
+    font-weight: bold;
+    font-size: 25px;
+    color: white;
+}
+
+.searchField{
+    width: 200px;
+    border: black solid 3px;
+    border-radius: 20px;
+    height: 42px;
+    box-sizing: border-box;
+    font-family: Inter;
+    font-size: 15px;
+    font-weight: bold;
+    padding-left: 30px;
+}
+
+.addOrderButton{
+    background-color: #1C12DB;
+    color: white;
+    height: 70px;
+    width: 250px;
+    display: block;
+    border: 1px solid #1C12DB;
+    border-radius: 20px;
+    font-family: Inter;
+    margin: 20px auto;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    mix-blend-mode: normal;
+    filter: blur(0px);
+}
+
+.addOrderButton:hover{
+    background-color: rgba(28, 18, 219, 0.85);
+}

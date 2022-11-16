@@ -66,12 +66,12 @@
 }
 
 #advice{
-    margin: 10px 0;
+    margin: 20px 0;
     text-align: center;
 }
 
 .contacts{
-    position: fixed;
+    position: absolute;
     bottom: 0;
     right: 30px;
     display: flex;
