@@ -1,0 +1,35 @@
+.popUp{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -40%);
+    font-family: Inter;
+    border: 3px solid #1C12DB;
+    border-radius: 20px;
+    padding: 30px;
+    background-color: rgba(28, 98, 219, 0.1);
+}
+
+.explanation{
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.button{
+    background-color: #1C12DB;
+    color: white;
+    height: 60px;
+    width: 210px;
+    border-radius: 20px;
+    font-family: Inter;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.button:hover{
+    background-color: rgba(28, 18, 219, 0.85);
+}

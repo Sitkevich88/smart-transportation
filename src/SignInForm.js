@@ -3,7 +3,7 @@ import {useNavigate} from 'react-router-dom';
 
 const SignInForm = () => {
     const navigate = useNavigate();
-    const logIn = () => navigate('/user/main');
+    const logIn = () => navigate('/main');
     const goToRegisterPage = () => navigate('/registration');
 
     return (<div className={styles.wrapper}>
