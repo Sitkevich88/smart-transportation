@@ -1,29 +1,56 @@
 import styles from "./RegistartionForm.module.css";
 import {useNavigate} from 'react-router-dom';
+import {useForm} from "react-hook-form";
 
 const SignInForm = () => {
+    const { register, formState: { errors }, handleSubmit } = useForm();
     const navigate = useNavigate();
-    const logIn = () => navigate('/main');
-    const goToRegisterPage = () => navigate('/registration');
+    const onSubmit = data => {
+        console.log(data);
+        navigate('/main');
+    };
+    const goToRegistrationPage = () => navigate('/registration');
 
     return (<div className={styles.wrapper}>
         <div className={styles.headerWrapper}>
             <h1 className={styles.header}>Вход</h1>
         </div>
-        <form className={styles.form}>
-            <div className={styles.inputs} style={{height: "250px"}}>
-                <div className={styles.input}>
-                    <label htmlFor="login" className={styles.inputFieldName}>Логин</label>
-                    <input type="text" className={styles.inputField} placeholder="Введите ваш логин" min={8} max={16} name="login"/>
-                </div>
-                <div className={styles.input}>
-                    <label htmlFor="password" className={styles.inputFieldName}>Пароль</label>
-                    <input type="password" className={styles.inputField} placeholder="Введите ваш пароль" min={8} max={16} name="password"/>
-                </div>
+        <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+            <div className={styles.inputs}>
+                <label className={styles.input}>
+                    <span className={styles.inputFieldName}>Логин</span>
+                    <input {...register("login", { required: true, minLength: 8, maxLength: 20 })}
+                           aria-invalid={errors.companyName ? "true" : "false"}
+                           className={styles.inputField} placeholder="Введите ваш логин"
+                           type="text"
+                    />
+                    {
+                        {
+                            'required': <span role="alert" className={styles.error}>Это поле обязательно</span>,
+                            'minLength': <span role="alert" className={styles.error}>Минимальная длина логина 8 символов</span>,
+                            'maxLength': <span role="alert" className={styles.error}>Максимальная длина логина 20 символов</span>,
+                        }[errors.login?.type]
+                    }
+                </label>
+                <label className={styles.input}>
+                    <span className={styles.inputFieldName}>Пароль</span>
+                    <input {...register("password", { required: true, minLength: 8, maxLength: 20 })}
+                           aria-invalid={errors.password ? "true" : "false"}
+                           className={styles.inputField} placeholder="Введите ваш пароль"
+                           type="password"
+                    />
+                    {
+                        {
+                            'required': <span role="alert" className={styles.error}>Это поле обязательно</span>,
+                            'minLength': <span role="alert" className={styles.error}>Минимальная длина пароля 8 символов</span>,
+                            'maxLength': <span role="alert" className={styles.error}>Максимальная длина пароля 20 символов</span>,
+                        }[errors.password?.type]
+                    }
+                </label>
             </div>
             <div className={styles.bottom}>
-                <p className={styles.suggestion}>Ещё не зарегестрированы? <span className={styles.link} onClick={goToRegisterPage}>Зарегестрируйтесь</span> </p>
-                <input type="button" value="Войти" className={styles.sendFormButton} onClick={logIn}/>
+                <p className={styles.suggestion}>Уже зарегестрированы? <span className={styles.link} onClick={goToRegistrationPage}>Войдите</span> </p>
+                <input type="submit" value="Войти" className={styles.sendFormButton}/>
             </div>
         </form>
     </div> );

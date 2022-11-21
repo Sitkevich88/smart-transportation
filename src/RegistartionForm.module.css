@@ -32,11 +32,12 @@
 }
 
 .inputs{
-    height: 300px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
+    margin-top: 20px;
+    gap: 20px;
 }
 
 .input{
@@ -89,7 +90,7 @@
 
 .link{
     color: rgba(28, 18, 219, 1);
-    font-weight: bold;
+    font-weight: 800;
     text-decoration: underline;
     cursor: pointer;
 }
@@ -112,4 +113,10 @@
 
 .sendFormButton:hover{
     background-color: rgba(28, 18, 219, 0.85);
+}
+
+.error{
+    color: #931e1e;
+    font-weight: bold;
+    font-size: 13px;
 }

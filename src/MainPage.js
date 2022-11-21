@@ -5,7 +5,7 @@ import MapPreview from "./MapPreview";
 const MainPage = () => {
     return <>
         <CustomerHeader/>
-        <div className={styles.ellipses_wrapper}>
+        <div className={styles.ellipsesWrapper}>
             <div className={styles.ellipse}></div>
         </div>
         <div className={styles.searchFieldsWrapper}>
