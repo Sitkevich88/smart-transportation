@@ -2,7 +2,9 @@ import styles from "./MapPreview.module.css";
 import React, {useEffect, useRef, useState} from "react";
 import mapService from "./service/MapService";
 
-const MapPreview = () => {
+const Map = (props) => {
+    let station1 = props.station1;
+    let station2 = props.station2;
     const canvas = useRef(null);
     const [points, setPoints] = useState([]);
     const [lines, setLines] = useState([]);
@@ -18,8 +20,11 @@ const MapPreview = () => {
         setNames(mapService.getSVGTexts());
     }, []);
 
+    useEffect(()=>{
+        console.log(station1, station2)
+    }, [station1, station2])
+
     return (<div className={styles.wrapper}>
-        <p className={styles.tittle}>Мы работаем по всей области</p>
         <div className={styles.canvas} id="canvas" ref={canvas}>
             <svg className={styles.svg}>
                 {lines}
@@ -30,4 +35,4 @@ const MapPreview = () => {
     </div>);
 }
 
-export default MapPreview;
+export default Map;

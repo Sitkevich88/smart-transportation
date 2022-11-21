@@ -10,14 +10,17 @@ import SignInPage from "./SignInPage";
 import MainPage from "./MainPage";
 
 function App() {
-    return (<BrowserRouter>
-        <Routes>
-            <Route path="/registration" element={<RegistrationPage />} />
-            <Route path="/login" element={<SignInPage />} />
-            <Route path="/main" element={<MainPage />} />
-            <Route path="/" element={<StartPage />} />
-        </Routes>
-    </BrowserRouter>);
+    return (<>
+
+        <BrowserRouter>
+            <Routes>
+                <Route path="/registration" element={<RegistrationPage />} />
+                <Route path="/login" element={<SignInPage />} />
+                <Route path="/main" element={<MainPage />} />
+                <Route path="/" element={<StartPage />} />
+            </Routes>
+        </BrowserRouter>
+    </>);
 }
 
 export default App;
