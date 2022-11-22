@@ -5,12 +5,13 @@ import mapService from "./service/MapService";
 const Map = (props) => {
     let station1 = props.station1;
     let station2 = props.station2;
+    let isPathSelected = false;
     const canvas = useRef(null);
     const [points, setPoints] = useState([]);
     const [lines, setLines] = useState([]);
     const [names, setNames] = useState([]);
 
-    useEffect(() => {
+    const rerender = () => {
         const h = canvas.current.offsetHeight;
         const w = canvas.current.offsetWidth;
 
@@ -18,10 +19,23 @@ const Map = (props) => {
         setPoints(mapService.getSVGPoints());
         setLines(mapService.getSVGLines());
         setNames(mapService.getSVGTexts());
+    };
+
+    useEffect(() => {
+        rerender();
     }, []);
 
+    useEffect(() => {
+        rerender();
+    }, [isPathSelected]);
+
     useEffect(()=>{
-        console.log(station1, station2)
+        isPathSelected = !!station1 && !!station2;
+        if (isPathSelected)
+            mapService.loadPath(station1, station2);
+        else
+            mapService.unLoadPath();
+        rerender();
     }, [station1, station2])
 
     return (<div className={styles.wrapper}>

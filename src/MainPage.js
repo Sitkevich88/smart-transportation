@@ -24,7 +24,6 @@ const MainPage = () => {
                 <span className={styles.searchFieldLabel}>От</span>
                 <select className={styles.searchField}
                         onChange={e => setStation1(e.target.value)}
-                        defaultValue={station1}
                 >
                     {stationsOptions}
                 </select>
