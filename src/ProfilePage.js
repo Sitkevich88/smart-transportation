@@ -1,18 +1,19 @@
+import {useForm} from "react-hook-form";
+import {useState} from "react";
 import CustomerHeader from "./CustomerHeader";
 import mainPageStyles from "./MainPage.module.css";
-import {useForm} from "react-hook-form";
-import {useNavigate} from "react-router-dom";
-import styles from "./ProfilePage.module.css";
-import {useState} from "react";
 import stylesStartPage from "./StartPage.module.css";
+import styles from "./ProfilePage.module.css";
 
 const ProfilePage = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
-    const navigate = useNavigate();
     const [isEditing, setIsEditing] = useState(false);
     const onSubmit = data => {
         console.log(data);
         setIsEditing(false);
+    };
+    const reverse = () => {
+        setIsEditing(!isEditing);
     };
 
     return (<>
@@ -60,8 +61,12 @@ const ProfilePage = () => {
                     </label>
                 </div>
                 <div className={styles.bottom}>
-                    {isEditing && <input type="submit" value="✔" className={styles.approveFormButton}/>}
-                    <input type="button" value="Редактировать" className={styles.editFormButton} onClick={() => setIsEditing(!isEditing)}/>
+                    {!isEditing && <input type="button" value="Редактировать" className={styles.editFormButton} onClick={() => setIsEditing(!isEditing)}/>}
+                    {isEditing && <>
+                        <input type="button" value="✖" className={styles.disapproveFormButton} onClick={() => reverse()}/>
+                        <input type="submit" value="✔" className={styles.approveFormButton}/>
+                    </>
+                    }
                 </div>
             </form>
         </div>

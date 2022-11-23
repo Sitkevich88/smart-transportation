@@ -1,0 +1,129 @@
+.wrapper{
+    display: block;
+    width: 800px;
+    min-height: fit-content;
+    border: 3px solid;
+    border-radius: 20px;
+    padding: 0;
+    overflow: hidden;
+    background-color: #D9D9D9;
+    margin: 20px auto 0 auto;
+}
+
+.headerWrapper{
+    display: block;
+    width: 100%;
+    height: 42px;
+    background-color: #9BAFF5;
+    border-bottom: 3px solid;
+}
+
+.header{
+    font-family: Inter;
+    font-size: 21px;
+    font-weight: bold;
+    margin: 0;
+    padding-top: 7px;
+    text-align: center;
+}
+
+.form{
+    height: 93%;
+}
+
+.inputs{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 20px;
+    gap: 20px;
+}
+
+.input{
+    display: flex;
+    flex-direction: column;
+}
+
+.inputFieldName{
+    font-family: Inter;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.inputField{
+    border: black solid 3px;
+    border-radius: 20px;
+    height: 42px;
+    width: 650px;
+    box-sizing: border-box;
+    font-family: Inter;
+    font-size: 15px;
+    font-weight: bold;
+    padding-left: 30px;
+}
+
+.inputField:focus{
+    border: purple solid 3px;
+    background-color: #e1edf6;
+}
+
+.inputField::placeholder{
+    font-family: Inter;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.bottom{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.sendFormButton{
+    background-color: #1C12DB;
+    color: white;
+    height: 60px;
+    width: 210px;
+    border-radius: 20px;
+    font-family: Inter;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.goBackButton{
+    background-color: #1C12DB;
+    color: white;
+    height: 30px;
+    width: 100px;
+    border-radius: 10px;
+    font-family: Inter;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    margin: 10px 0 0 10px;
+}
+
+.sendFormButton:hover, .goBackButton:hover{
+    background-color: rgba(28, 18, 219, 0.85);
+}
+
+.error{
+    color: #931e1e;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.approveFormButton{
+    font-size: 20px;
+    font-weight: 900;
+    border-radius: 5px;
+    padding: 5px 10px;
+    background-color: #13860a;
+    color: white;
+    cursor: pointer;
+}

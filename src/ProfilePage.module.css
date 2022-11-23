@@ -111,9 +111,21 @@
 }
 
 .approveFormButton{
+    font-size: 20px;
+    font-weight: 900;
     border-radius: 5px;
-    padding: 5px;
-    background-color: #29db1c;
+    padding: 5px 10px;
+    background-color: #13860a;
+    color: white;
+    cursor: pointer;
+}
+
+.disapproveFormButton{
+    font-size: 20px;
+    font-weight: 900;
+    border-radius: 5px;
+    padding: 5px 10px;
+    background-color: #860a18;
     color: white;
     cursor: pointer;
 }

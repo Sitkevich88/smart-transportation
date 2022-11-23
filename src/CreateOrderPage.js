@@ -2,16 +2,116 @@ import mainPageStyles from "./MainPage.module.css";
 import {useNavigate} from "react-router-dom";
 import styles from "./CreateOrderPage.module.css";
 import stylesStartPage from "./StartPage.module.css";
+import {useForm} from "react-hook-form";
+import mapService from "./service/MapService";
 
 const CreateOrderPage = (props) => {
     const navigate = useNavigate();
+    const { register, formState: { errors }, handleSubmit } = useForm();
+    const onSubmit = data => {
+        console.log(data);
+        navigate('/main');
+    };
+    const stationsOptions = mapService.getUniqueStationNames().map(name => {
+        return <option key={name + '_stationName'}>{name}</option>;
+    });
+
+    stationsOptions.unshift(
+        <option disabled selected value style={{display: "none"}}></option>
+    );
+
+    const types = [
+        <option disabled selected value style={{display: "none"}} key="empty"></option>,
+        <option key="Нефть" value="Нефть">Нефть</option>,
+        <option key="Пропан" value="Пропан">Пропан</option>,
+        <option key="Песок" value="Песок">Песок</option>,
+        <option key="Щебень" value="Щебень">Щебень</option>,
+        <option key="Другое" value="Другое">Другое</option>
+    ];
 
     return <>
         <div className={mainPageStyles.ellipsesWrapper}>
             <div className={mainPageStyles.ellipse}></div>
         </div>
-        <p>Страница создания заявки</p>
-        <button onClick={() => navigate(-1)}>Назад</button>
+
+        <button onClick={() => navigate(-1)} className={styles.goBackButton}>Назад</button>
+
+        <div className={styles.wrapper}>
+            <div className={styles.headerWrapper}>
+                <h1 className={styles.header}>Новая заявка</h1>
+            </div>
+            <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+                <div className={styles.inputs}>
+                    <label className={styles.input}>
+                        <span className={styles.inputFieldName}>От какой станции</span>
+                        <select {...register("from", { required: true })}
+                                aria-invalid={errors.from ? "true" : "false"}
+                                className={styles.inputField}
+                        >
+                            {stationsOptions}
+                        </select>
+                        {
+                            {
+                                'required': <span role="alert" className={styles.error}>Обязательное поле</span>
+                            }[errors.from?.type]
+                        }
+                    </label>
+                    <label className={styles.input}>
+                        <span className={styles.inputFieldName}>До какой станции</span>
+                        <select {...register("to", { required: true })}
+                                aria-invalid={errors.to ? "true" : "false"}
+                                className={styles.inputField}
+                        >
+                            {[...stationsOptions]}
+                        </select>
+                    </label>
+                    {
+                        {
+                            'required': <span role="alert" className={styles.error}>Обязательное поле</span>
+                        }[errors.to?.type]
+                    }
+                    <label className={styles.input}>
+                        <span className={styles.inputFieldName}>Тип груза</span>
+                        <select {...register("to", { required: true })}
+                                aria-invalid={errors.type ? "true" : "false"}
+                                className={styles.inputField}
+                        >
+                            {types}
+                        </select>
+                    </label>
+                    {
+                        {
+                            'required': <span role="alert" className={styles.error}>Обязательное поле</span>
+                        }[errors.type?.type]
+                    }
+                    <label className={styles.input}>
+                        <span className={styles.inputFieldName}>Вес груза</span>
+                        <input {...register("weight", { min: 0.1, max: 10000, required: true })}
+                               aria-invalid={errors.weight ? "true" : "false"}
+                               className={styles.inputField} placeholder="Введите вес вашего груза в килограммах"
+                               type="number"
+                        />
+                        {
+                            {
+                                'required': <span role="alert" className={styles.error}>Обязательное поле</span>,
+                                'min': <span role="alert" className={styles.error}>Вес слишком маленький</span>,
+                                'max': <span role="alert" className={styles.error}>Вес слишком большой</span>,
+                            }[errors.weight?.type]
+                        }
+                    </label>
+                    <label className={styles.input}>
+                        <span className={styles.inputFieldName}>Комментарий</span>
+                        <input {...register("weight")}
+                               className={styles.inputField} placeholder="Введите комментарий по желанию"
+                               type="text"
+                        />
+                    </label>
+                </div>
+                <div className={styles.bottom}>
+                    <input type="submit" value="Отправить" className={styles.sendFormButton}/>
+                </div>
+            </form>
+        </div>
         <div className={stylesStartPage.contacts}>
             <p className={stylesStartPage.comment}>Желаете связаться с оператором?</p>
             <p className={stylesStartPage.comment}>+7(911)222-33-44</p>
