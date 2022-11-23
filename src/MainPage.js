@@ -35,13 +35,15 @@ const MainPage = () => {
                 <span className={styles.searchFieldLabel}>До</span>
                 <select className={styles.searchField}
                         onChange={e => setStation2(e.target.value)}
-                        defaultValue={station2}>
+                >
                     {stationsOptions}
                 </select>
             </label>
         </div>
         <Map station1={station1} station2={station2}/>
-        <button className={styles.addOrderButton} onClick={() => navigate('/addorder')}>Оставить заявку</button>
+        <button className={styles.addOrderButton}
+                onClick={() => navigate(`/addorder?station1=${!!station1 ? station1 : ''}&station2=${!!station2 ? station2 : ''}`)}
+        >Оставить заявку</button>
         <div className={stylesStartPage.contacts}>
             <p className={stylesStartPage.comment}>Желаете связаться с оператором?</p>
             <p className={stylesStartPage.comment}>+7(911)222-33-44</p>
