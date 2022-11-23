@@ -15,7 +15,7 @@ const MainPage = () => {
     const [station2, setStation2] = useState(null);
 
     return <>
-        <CustomerHeader/>
+        <CustomerHeader buttonId={1}/>
         <div className={styles.ellipsesWrapper}>
             <div className={styles.ellipse}></div>
         </div>

@@ -1,0 +1,45 @@
+.buttons{
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    margin: 15px auto;
+}
+
+.buttons button{
+    width: 30%;
+    height: 35px;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 20px;
+    border: 3px solid black;
+    color: white;
+}
+
+.activeButton{
+    background-color: #156456;
+}
+
+.notActiveButton{
+    background-color: #1C12DB;
+}
+
+.orders{
+    width: 80%;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.order{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(217, 217, 217, 0.85);
+    border: 3px solid black;
+    border-radius: 20px;
+    padding: 20px;
+    width: 100%;
+}

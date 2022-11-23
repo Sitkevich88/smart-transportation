@@ -34,31 +34,31 @@ const RegistrationForm = () => {
                 </label>
                 <label className={styles.input}>
                     <span className={styles.inputFieldName}>Логин</span>
-                    <input {...register("login", { required: true, minLength: 8, maxLength: 20 })}
+                    <input {...register("login", { required: true, minLength: 8, maxLength: 30 })}
                            aria-invalid={errors.companyName ? "true" : "false"}
-                           className={styles.inputField} placeholder="Придумайте логин из 8-20 символов"
+                           className={styles.inputField} placeholder="Придумайте логин из 8-30 символов"
                            type="text"
                     />
                     {
                         {
                             'required': <span role="alert" className={styles.error}>Это поле обязательно</span>,
                             'minLength': <span role="alert" className={styles.error}>Минимальная длина логина 8 символов</span>,
-                            'maxLength': <span role="alert" className={styles.error}>Максимальная длина логина 20 символов</span>,
+                            'maxLength': <span role="alert" className={styles.error}>Максимальная длина логина 30 символов</span>,
                         }[errors.login?.type]
                     }
                 </label>
                 <label className={styles.input}>
                     <span className={styles.inputFieldName}>Пароль</span>
-                    <input {...register("password", { required: true, minLength: 8, maxLength: 20 })}
+                    <input {...register("password", { required: true, minLength: 8, maxLength: 30 })}
                            aria-invalid={errors.password ? "true" : "false"}
-                           className={styles.inputField} placeholder="Придумайте пароль из 8-20 символов"
+                           className={styles.inputField} placeholder="Придумайте пароль из 8-30 символов"
                            type="password"
                     />
                     {
                         {
                             'required': <span role="alert" className={styles.error}>Это поле обязательно</span>,
                             'minLength': <span role="alert" className={styles.error}>Минимальная длина пароля 8 символов</span>,
-                            'maxLength': <span role="alert" className={styles.error}>Максимальная длина пароля 20 символов</span>,
+                            'maxLength': <span role="alert" className={styles.error}>Максимальная длина пароля 30 символов</span>,
                         }[errors.password?.type]
                     }
                 </label>

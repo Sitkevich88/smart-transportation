@@ -18,7 +18,7 @@
     width: 60%;
 }
 
-.button{
+.menu button{
     background-color: #1C12DB;
     color: white;
     height: 35px;
@@ -31,8 +31,13 @@
     cursor: pointer;
 }
 
-.button:hover{
-    background-color: rgba(28, 18, 219, 0.85);
+button.activeButton{
+    background-color: #370A80;
+}
+
+.menu button:hover{
+    background-color: rgba(59, 54, 162, 0.85);
+    border-color: rgba(59, 54, 162, 0.85);
 }
 
 .logo{
