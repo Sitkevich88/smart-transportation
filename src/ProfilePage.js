@@ -4,6 +4,7 @@ import {useForm} from "react-hook-form";
 import {useNavigate} from "react-router-dom";
 import styles from "./ProfilePage.module.css";
 import {useState} from "react";
+import stylesStartPage from "./StartPage.module.css";
 
 const ProfilePage = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
@@ -63,6 +64,10 @@ const ProfilePage = () => {
                     <input type="button" value="Редактировать" className={styles.editFormButton} onClick={() => setIsEditing(!isEditing)}/>
                 </div>
             </form>
+        </div>
+        <div className={stylesStartPage.contacts}>
+            <p className={stylesStartPage.comment}>Желаете связаться с оператором?</p>
+            <p className={stylesStartPage.comment}>+7(911)222-33-44</p>
         </div>
         </>);
 }

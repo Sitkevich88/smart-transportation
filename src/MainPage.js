@@ -4,6 +4,7 @@ import mapService from "./service/MapService";
 import {useState} from "react";
 import Map from "./Map";
 import {useNavigate} from "react-router-dom";
+import stylesStartPage from "./StartPage.module.css";
 
 const MainPage = () => {
     const navigate = useNavigate();
@@ -40,7 +41,11 @@ const MainPage = () => {
             </label>
         </div>
         <Map station1={station1} station2={station2}/>
-        <button className={styles.addOrderButton} onClick={() => navigate('/orders')}>Оставить заявку</button>
+        <button className={styles.addOrderButton} onClick={() => navigate('/addorder')}>Оставить заявку</button>
+        <div className={stylesStartPage.contacts}>
+            <p className={stylesStartPage.comment}>Желаете связаться с оператором?</p>
+            <p className={stylesStartPage.comment}>+7(911)222-33-44</p>
+        </div>
     </>;
 }
 
