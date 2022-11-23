@@ -3,8 +3,10 @@ import styles from "./MainPage.module.css";
 import mapService from "./service/MapService";
 import {useState} from "react";
 import Map from "./Map";
+import {useNavigate} from "react-router-dom";
 
 const MainPage = () => {
+    const navigate = useNavigate();
     const stationsOptions = mapService.getUniqueStationNames().map(name => {
         return <option key={name + '_stationName'}>{name}</option>;
     });
@@ -38,7 +40,7 @@ const MainPage = () => {
             </label>
         </div>
         <Map station1={station1} station2={station2}/>
-        <button className={styles.addOrderButton}>Оставить заявку</button>
+        <button className={styles.addOrderButton} onClick={() => navigate('/orders')}>Оставить заявку</button>
     </>;
 }
 

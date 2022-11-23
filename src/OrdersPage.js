@@ -49,6 +49,10 @@ const OrdersPage = (props) => {
                 </div>
             </div>
         }
+        {displayActiveOrders && <button className={styles.addOrder}>
+            <span className={styles.addOrderLogo}>+</span>
+            <span className={styles.addOrderText}>Создать заявку</span>
+        </button>}
     </>);
 }
 
