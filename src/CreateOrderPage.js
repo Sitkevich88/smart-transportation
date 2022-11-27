@@ -5,9 +5,8 @@ import stylesStartPage from "./StartPage.module.css";
 import {useForm} from "react-hook-form";
 import mapService from "./service/MapService";
 import qs from 'query-string';
-import {useState} from "react";
 
-const CreateOrderPage = (props) => {
+const CreateOrderPage = () => {
     const navigate = useNavigate();
     const { register, formState: { errors }, handleSubmit } = useForm();
     let {station1, station2} = [null, null];
@@ -99,7 +98,7 @@ const CreateOrderPage = (props) => {
                         }[errors.type?.type]
                     }
                     <label className={styles.input}>
-                        <span className={styles.inputFieldName}>Вес груза</span>
+                        <span className={styles.inputFieldName}>Вес груза (кг)</span>
                         <input {...register("weight", { min: 0.1, max: 10000, minLength: 1 })}
                                aria-invalid={errors.weight ? "true" : "false"}
                                className={styles.inputField} placeholder="Введите вес вашего груза в килограммах"
@@ -115,9 +114,8 @@ const CreateOrderPage = (props) => {
                     </label>
                     <label className={styles.input}>
                         <span className={styles.inputFieldName}>Комментарий</span>
-                        <input {...register("weight")}
+                        <textarea {...register("weight")}
                                className={styles.inputField} placeholder="Введите комментарий по желанию"
-                               type="text"
                         />
                     </label>
                 </div>

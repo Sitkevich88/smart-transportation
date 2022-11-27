@@ -63,7 +63,7 @@ function MapService(){
                 return;
 
             points.push(
-                this.isPathLoaded() && !!!path.find(stId => stId == st.id)
+                this.isPathLoaded() && !!!path.find(stId => stId === st.id)
                 ? <circle cx={st.x} cy={st.y} r={r} style={{
                         fill: notSelected
                     }} key={'pointId_' + st.id} stroke="black" strokeWidth={strokeWidth}/>
@@ -85,7 +85,7 @@ function MapService(){
             const strL = `M ${x} ${y-(r-offset)} A 1 1 0 0 0 ${x} ${y+(r-offset)} L ${x} ${y-(r-offset)} Z`;
             const strR = `M ${x} ${y-(r-offset)} L ${x} ${y+(r-offset)} A 1 1 0 0 0 ${x} ${y-(r-offset)} Z`;
 
-            if (this.isPathLoaded() && !!!path.find(stId => stId == intersectedStations[0].id)){
+            if (this.isPathLoaded() && !!!path.find(stId => stId === intersectedStations[0].id)){
                 points.push(<path d={strL}
                                   key={'intersectionId_'+ intersectionId + '.stationId_' + intersectedStations[0].id}
                                   style={{fill: notSelected}}/>
@@ -97,7 +97,7 @@ function MapService(){
                 );
             }
 
-            if (this.isPathLoaded() && !!!path.find(stId => stId == intersectedStations[1].id)){
+            if (this.isPathLoaded() && !!!path.find(stId => stId === intersectedStations[1].id)){
                 points.push(<path d={strR}
                                   key={'intersectionId_'+ intersectionId + '.stationId_' + intersectedStations[1].id}
                                   style={{fill: notSelected}}/>
@@ -133,7 +133,7 @@ function MapService(){
             }
             linesMap.get(lineId).push(st.x + ',' + st.y);
 
-            if (this.isPathLoaded() && !!path.find(stId => stId==st.id)){
+            if (this.isPathLoaded() && !!path.find(stId => stId===st.id)){
                 if (!pathMap.has(lineId)) {
                     pathMap.set(lineId, []);
                     pathTrainLinesIds.push(lineId);
