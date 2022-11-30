@@ -12,22 +12,19 @@ const Map = (props) => {
     const [names, setNames] = useState([]);
 
     const rerender = () => {
-        const h = canvas.current.offsetHeight;
-        const w = canvas.current.offsetWidth;
-
-        mapService.normaliseStations(h, w);
         setPoints(mapService.getSVGPoints());
         setLines(mapService.getSVGLines());
         setNames(mapService.getSVGTexts());
     };
 
     useEffect(() => {
+        const h = canvas.current.offsetHeight;
+        const w = canvas.current.offsetWidth;
+
+        mapService.normaliseStations(h, w);
         rerender();
     }, []);
 
-    useEffect(() => {
-        rerender();
-    }, [isPathSelected]);
 
     useEffect(()=>{
         isPathSelected = !!station1 && !!station2;
@@ -35,6 +32,7 @@ const Map = (props) => {
             mapService.loadPath(station1, station2);
         else
             mapService.unLoadPath();
+
         rerender();
     }, [station1, station2])
 

@@ -68,6 +68,10 @@
     background-color: #e1edf6;
 }
 
+.inputField:disabled{
+    background-color: #c7d0d7;
+}
+
 .inputField::placeholder{
     font-family: Inter;
     font-size: 15px;
