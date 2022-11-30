@@ -4,6 +4,8 @@ import styles from "./OrdersPage.module.css";
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import stylesStartPage from "./StartPage.module.css";
+import orders from "./store/Orders";
+import Map from "./Map";
 
 const OrdersPage = (props) => {
     const [displayActiveOrders, setDisplayActiveOrders] = useState(true);
@@ -28,30 +30,28 @@ const OrdersPage = (props) => {
                 Архив заявок
             </button>
         </div>
-        {displayActiveOrders
-            ? <div className={styles.orders}>
-                <div className={styles.order}>
+        <div className={styles.orders}>
+            {orders[displayActiveOrders ? 'activeOrders' : 'oldOrders'].map(order => {
+                return (<div className={styles.order} key={order.id}>
                     <div className={styles.orderLeftWrapper}>
-                        <p>6 ноября 2022 г.</p>
-                        <p>Каменная -> Деревянная</p>
+                        <p>{order.creationDate}</p>
+                        <p>{order.from} -> {order.to}</p>
+                        <Map station1={order.from} station2={order.to} width={300} height={200}/>
                     </div>
                     <div className={styles.orderRightWrapper}>
-
+                        <p>Заказ: {order.id}</p>
+                        <div>
+                            <p>{order.cargoType}</p>
+                            <p>{order.weight} кг</p>
+                        </div>
+                        <p>Отправлено: {order.dispatchDate ?? '--'}</p>
+                        <p>Доставлено: {order.receiptDate ?? '--'}</p>
+                        <p>Комментарий: {order.comment ?? '--'}</p>
+                        <p>Статус: {order.status}</p>
                     </div>
-                </div>
-            </div>
-            : <div className={styles.orders}>
-                <div className={styles.order}>
-                    <div className={styles.orderLeftWrapper}>
-                        <p>1 октября 2022 г.</p>
-                        <p>Деревянная -> Каменная</p>
-                    </div>
-                    <div className={styles.orderRightWrapper}>
-
-                    </div>
-                </div>
-            </div>
-        }
+                </div>);
+            })}
+        </div>
         {displayActiveOrders && <button className={styles.addOrder} onClick={() => navigate('/addorder')}>
             <span className={styles.addOrderLogo}>+</span>
             <span className={styles.addOrderText}>Создать заявку</span>

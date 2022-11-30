@@ -23,6 +23,10 @@
     background-color: #1C12DB;
 }
 
+.notActiveButton:hover{
+    background-color: #154664;
+}
+
 .orders{
     width: 80%;
     margin: 20px auto;
@@ -78,7 +82,7 @@
     font-size: 15px;
     padding: 0 10px;
     margin: 0;
-    background-color: rgb(255, 255, 255);
+    background-color: #ecf1ff;
     height: 42px;
     border-top: 1px solid black;
     border-bottom: 1px solid black;

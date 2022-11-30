@@ -13,8 +13,10 @@ function MapService(){
     const intersections: Array = mapIntersections.sort((int1, int2) =>
         (int1.id * 100 + int1.station_id) - (int2.id * 100 + int2.station_id)
     );
-    const notSelected = '#343445';
+    const notSelected = '#666685';
     let path = [];
+    let _height = null;
+    let _width = null;
     const pathFinderService = new PathFinderService(stations, intersections); //todo remove it
 
     this.isPathLoaded = () => path.length >= 2;
@@ -37,6 +39,8 @@ function MapService(){
     };
 
     this.normaliseStations = (height, width) => {
+        _height = height;
+        _width = width;
         const minX = Math.min(...stations.map(station => station.x));
         const maxX = Math.max(...stations.map(station => station.x));
         const minY = Math.min(...stations.map(station => station.y));
@@ -54,9 +58,9 @@ function MapService(){
 
     this.getSVGPoints = () => {
         const points = [];
-        const r = 10;
-        const strokeWidth = 2;
-        const offset = strokeWidth / 2;
+        const r = _height ? _height/45 : 10;
+        const strokeWidth = r / 5;
+        const offset = r / 10;
 
         stations.forEach(st => {
             if (intersections.find(intersection => st.id === intersection.station_id))
@@ -118,6 +122,7 @@ function MapService(){
     }
 
     this.getSVGLines = () => {
+        const strokeWidth = _height ? _height/45 : 10;
         const lines = [];
         const linesMap = new Map();
         const pathMap = new Map();
@@ -145,23 +150,24 @@ function MapService(){
         trainLinesIds.forEach(lineId => {
             const color = pathTrainLinesIds.length>0 ? notSelected : trainLines.find(line => lineId === line.id).color;
             const values = linesMap.get(lineId).join(' ');
-            lines.push(<polyline points={values} fill="none" stroke={color} strokeWidth={10} opacity={0.8} key={'lineId_' + lineId} />)
+            lines.push(<polyline points={values} fill="none" stroke={color} strokeWidth={strokeWidth} opacity={0.8} key={'lineId_' + lineId} />)
         });
 
         pathTrainLinesIds.forEach(lineId => {
             const color = trainLines.find(line => lineId === line.id).color;
             const values = pathMap.get(lineId).join(' ');
-            lines.push(<polyline points={values} fill="none" stroke={color} strokeWidth={10} opacity={0.8} key={'selectedLineId_' + lineId} />)
+            lines.push(<polyline points={values} fill="none" stroke={color} strokeWidth={strokeWidth} opacity={0.8} key={'selectedLineId_' + lineId} />)
         });
 
         return lines;
     }
 
     this.getSVGTexts = () => {
+        const fontSize = `${17 * (_height ? _height/450 : 1)}px`;
         const names = [];
         const texts = [];
-        const offsetX = -30;
-        const offsetY = -20;
+        const offsetX = -50 * (_height ? _height/450 : 1);
+        const offsetY = -20 * (_height ? _height/450 : 1);
 
         stations.forEach(st => {
             if (!names.find(n => n === st.name))
@@ -170,7 +176,7 @@ function MapService(){
                 return;
 
             texts.push(<tspan x={st.x + offsetX} y={st.y + offsetY}
-                              key={'textId_' + st.id}>{st.name}</tspan>);
+                              key={'textId_' + st.id} fontSize={fontSize}>{st.name}</tspan>);
         })
         return <text className={styles.stations_names}>{texts}</text>;
     }
@@ -182,6 +188,4 @@ function MapService(){
     this.unLoadPath = () => { path = [];};
 }
 
-const mapService = new MapService();
-
-export default mapService;
+export default new MapService();

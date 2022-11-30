@@ -37,7 +37,7 @@ const Map = (props) => {
     }, [station1, station2])
 
     return (<div className={styles.wrapper}>
-        <div className={styles.canvas} id="canvas" ref={canvas}>
+        <div className={styles.canvas} id="canvas" ref={canvas} style={{width: props.width, height: props.height}}>
             <svg className={styles.svg}>
                 {lines}
                 {points}
