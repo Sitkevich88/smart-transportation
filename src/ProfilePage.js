@@ -4,17 +4,27 @@ import CustomerHeader from "./CustomerHeader";
 import mainPageStyles from "./MainPage.module.css";
 import stylesStartPage from "./StartPage.module.css";
 import styles from "./ProfilePage.module.css";
+import profile from "./store/Profile";
+import {observer} from "mobx-react"
 
-const ProfilePage = () => {
-    const { register, formState: { errors }, handleSubmit } = useForm();
-    const [isEditing, setIsEditing] = useState(false);
+const ProfilePage = observer(() => {
+    const { register, formState: { errors, isDirty }, handleSubmit, setValue } = useForm({defaultValues: {companyName: profile.companyName, phoneNumber: profile.phoneNumber}});
+    const [ isEditing, setIsEditing ] = useState(false);
+    
     const onSubmit = data => {
-        console.log(data);
         setIsEditing(false);
+        profile.updateProfile(data.companyName, data.phoneNumber);
     };
-    const reverse = () => {
+    
+    const toggle = () => {
         setIsEditing(!isEditing);
     };
+
+    const recover = () => {
+        setValue('companyName', profile.companyName);
+        setValue('phoneNumber', profile.phoneNumber);
+        toggle();
+    }
 
     return (<>
         <CustomerHeader buttonId={0}/>
@@ -29,41 +39,40 @@ const ProfilePage = () => {
                 <div className={styles.inputs}>
                     <label className={styles.input}>
                         <span className={styles.inputFieldName}>Название компании</span>
-                        <input {...register("companyName", { minLength: 8, maxLength: 30 })}
+                        <input {...register("companyName", { minLength: 2, required: true})}
                                aria-invalid={errors.companyName ? "true" : "false"}
-                               className={styles.inputField} placeholder="Введите ваш название вашей компании"
+                               className={styles.inputField} placeholder="Введите название вашей компании"
                                type="text"
-                               defaultValue="ООО Агроном"
                                disabled={!isEditing}
                         />
                         {
                             {
-                                'minLength': <span role="alert" className={styles.error}>Минимальная длина логина 8 символов</span>,
-                                'maxLength': <span role="alert" className={styles.error}>Максимальная длина логина 30 символов</span>,
+                                'minLength': <span role="alert" className={styles.error}>Минимальная длина названия 2 символа</span>,
+                                'required': <span role="alert" className={styles.error}>Обязательное поле</span>,
                             }[errors.companyName?.type]
                         }
                     </label>
                     <label className={styles.input}>
                         <span className={styles.inputFieldName}>Номер телефона</span>
-                        <input {...register("phoneNumber", { minLength: 6, maxLength: 12 })}
+                        <input {...register("phoneNumber", { required: true, minLength: 11, maxLength: 11})}
                                aria-invalid={errors.phoneNumber ? "true" : "false"}
-                               className={styles.inputField} placeholder="Введите ваш пароль"
+                               className={styles.inputField} placeholder="Введите номер телефона вашей компании"
                                type="tel"
-                               defaultValue={89112223344}
                                disabled={!isEditing}
                         />
                         {
                             {
-                                'minLength': <span role="alert" className={styles.error}>Минимальная длина пароля 6 символов</span>,
-                                'maxLength': <span role="alert" className={styles.error}>Максимальная длина пароля 12 символов</span>,
+                                'minLength': <span role="alert" className={styles.error}>Длина номера телефона 11 символов</span>,
+                                'maxLength': <span role="alert" className={styles.error}>Длина номера телефона 11 символов</span>,
+                                'required': <span role="alert" className={styles.error}>Обязательное поле</span>,
                             }[errors.phoneNumber?.type]
                         }
                     </label>
                 </div>
                 <div className={styles.bottom}>
-                    {!isEditing && <input type="button" value="Редактировать" className={styles.editFormButton} onClick={() => setIsEditing(!isEditing)}/>}
+                    {!isEditing && <input type="button" value="Редактировать" className={styles.editFormButton} onClick={() => toggle()}/>}
                     {isEditing && <>
-                        <input type="button" value="✖" className={styles.disapproveFormButton} onClick={() => reverse()}/>
+                        <input type="button" value="✖" className={styles.disapproveFormButton} onClick={() => recover()}/>
                         <input type="submit" value="✔" className={styles.approveFormButton}/>
                     </>
                     }
@@ -75,6 +84,6 @@ const ProfilePage = () => {
             <p className={stylesStartPage.comment}>+7(911)222-33-44</p>
         </div>
         </>);
-}
+});
 
 export default ProfilePage;
