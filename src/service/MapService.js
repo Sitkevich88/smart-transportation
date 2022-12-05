@@ -163,12 +163,11 @@ function MapService(){
     }
 
     this.getSVGTexts = () => {
-        const fontSize = `${17 * (_height ? _height/450 : 1)}px`;
+        const fontSize = `${17 * (_width ? _width/630 : 1)}px`;
         const names = [];
         const texts = [];
-        const offsetX = -50 * (_height ? _height/450 : 1);
+        const offsetX = -50 * (_width ? _width/600 : 1);
         const offsetY = -20 * (_height ? _height/450 : 1);
-
         stations.forEach(st => {
             if (!names.find(n => n === st.name))
                 names.push(st.name);

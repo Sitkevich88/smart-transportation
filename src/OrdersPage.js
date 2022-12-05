@@ -36,11 +36,11 @@ const OrdersPage = (props) => {
                     <div className={styles.orderLeftWrapper}>
                         <p>{order.creationDate}</p>
                         <p>{order.from} -> {order.to}</p>
-                        <Map station1={order.from} station2={order.to} width={300} height={200}/>
+                        <Map station1={order.from} station2={order.to} width={250} height={200}/>
                     </div>
                     <div className={styles.orderRightWrapper}>
                         <p>Заказ: {order.id}</p>
-                        <div>
+                        <div className={styles.orderRightWrapperLine}>
                             <p>{order.cargoType}</p>
                             <p>{order.weight} кг</p>
                         </div>

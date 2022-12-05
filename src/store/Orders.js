@@ -16,7 +16,7 @@ class Orders {
         },
         {
             id: 5685,
-            creationDate: '7 ноября 2022 г.',
+            creationDate: '5 ноября 2022 г.',
             from: 'Пальмовая',
             to: 'Деревянная',
             cargoType: 'Щебень',
@@ -25,6 +25,18 @@ class Orders {
             receiptDate: null,
             status: 'Ожидает оплаты',
             comment: null
+        },
+        {
+            id: 5686,
+            creationDate: '4 ноября 2022 г.',
+            from: 'Пальмовая',
+            to: 'Мраморная',
+            cargoType: 'Другое',
+            weight: 150,
+            dispatchDate: null,
+            receiptDate: null,
+            status: 'Ожидает оплаты',
+            comment: 'Хрусталь привезу'
         }
     ];
     oldOrders = [
