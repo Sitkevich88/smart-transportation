@@ -5,6 +5,7 @@ import stylesStartPage from "./StartPage.module.css";
 import {useForm} from "react-hook-form";
 import mapService from "./service/MapService";
 import qs from 'query-string';
+import orders from "./store/Orders";
 
 const CreateOrderPage = () => {
     const navigate = useNavigate();
@@ -12,7 +13,8 @@ const CreateOrderPage = () => {
     let {station1, station2} = [null, null];
     const onSubmit = data => {
         console.log(data);
-        navigate('/main');
+        orders.addActiveOrder(data);
+        navigate('/orders');
     };
     const stationsOptions = mapService.getUniqueStationNames().map(name => {
         return <option key={name + '_stationName'} value={name}>{name}</option>;
@@ -85,7 +87,7 @@ const CreateOrderPage = () => {
                     }
                     <label className={styles.input}>
                         <span className={styles.inputFieldName}>Тип груза</span>
-                        <select {...register("to", { required: true })}
+                        <select {...register("type", { required: true })}
                                 aria-invalid={errors.type ? "true" : "false"}
                                 className={styles.inputField}
                         >
@@ -114,7 +116,7 @@ const CreateOrderPage = () => {
                     </label>
                     <label className={styles.input}>
                         <span className={styles.inputFieldName}>Комментарий</span>
-                        <textarea {...register("weight")}
+                        <textarea {...register("comment")}
                                className={styles.inputField} placeholder="Введите комментарий по желанию"
                         />
                     </label>

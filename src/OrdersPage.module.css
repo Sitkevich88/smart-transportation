@@ -76,6 +76,10 @@ p{
 }
 
 .addOrder{
+    position: absolute;
+    z-index: 1;
+    top: 60px;
+    left: 44%;
     width: 180px;
     background-color: rgba(255, 255, 255, 0);
     border: 0 solid rgba(0, 0, 0, 0);
@@ -119,4 +123,15 @@ p{
     vertical-align: middle;
     display: inline-flex;
     align-items: center;
+}
+
+.popUpOpener{
+    color: rgba(28, 18, 219, 1);
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+.popUpOpener:hover{
+    color: rgb(6, 4, 42);
+    cursor: pointer;
 }

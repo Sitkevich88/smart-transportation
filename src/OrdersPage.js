@@ -6,10 +6,12 @@ import {useNavigate} from "react-router-dom";
 import stylesStartPage from "./StartPage.module.css";
 import orders from "./store/Orders";
 import Map from "./Map";
+import PaymentPopUp from "./PaymentPopUp";
 
 const OrdersPage = (props) => {
     const [displayActiveOrders, setDisplayActiveOrders] = useState(true);
     const navigate = useNavigate();
+    const [isPopUpOpened, setIsPopUpOpened] = useState(false);
 
     return (<>
         <CustomerHeader buttonId={2}/>
@@ -30,6 +32,10 @@ const OrdersPage = (props) => {
                 Архив заявок
             </button>
         </div>
+        {displayActiveOrders && <button className={styles.addOrder} onClick={() => navigate('/addorder')}>
+            <span className={styles.addOrderLogo}>+</span>
+            <span className={styles.addOrderText}>Создать заявку</span>
+        </button>}
         <div className={styles.orders}>
             {orders[displayActiveOrders ? 'activeOrders' : 'oldOrders'].map(order => {
                 return (<div className={styles.order} key={order.id}>
@@ -48,14 +54,15 @@ const OrdersPage = (props) => {
                         <p>Доставлено: {order.receiptDate ?? '--'}</p>
                         <p>Комментарий: {order.comment ?? '--'}</p>
                         <p>Статус: {order.status}</p>
+                        {order.status === 'Ожидает оплаты'
+                            ? <p className={styles.popUpOpener} onClick={() => setIsPopUpOpened(true)}>Открыть реквизиты</p>
+                            : null
+                        }
                     </div>
                 </div>);
             })}
         </div>
-        {displayActiveOrders && <button className={styles.addOrder} onClick={() => navigate('/addorder')}>
-            <span className={styles.addOrderLogo}>+</span>
-            <span className={styles.addOrderText}>Создать заявку</span>
-        </button>}
+        <PaymentPopUp display={isPopUpOpened} open={setIsPopUpOpened}/>
         <div className={stylesStartPage.contacts}>
             <p className={stylesStartPage.comment}>Желаете связаться с оператором?</p>
             <p className={stylesStartPage.comment}>+7(911)222-33-44</p>

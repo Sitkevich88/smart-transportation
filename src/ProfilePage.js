@@ -8,7 +8,7 @@ import profile from "./store/Profile";
 import {observer} from "mobx-react"
 
 const ProfilePage = observer(() => {
-    const { register, formState: { errors, isDirty }, handleSubmit, setValue } = useForm({
+    const { register, formState: { errors }, handleSubmit, setValue } = useForm({
         defaultValues: {companyName: profile.companyName, phoneNumber: profile.phoneNumber}
     });
     const [ isEditing, setIsEditing ] = useState(false);
