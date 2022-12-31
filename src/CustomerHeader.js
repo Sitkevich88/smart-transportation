@@ -7,14 +7,17 @@ const CustomerHeader = (props) => {
     const goToProfile = () => navigate('/profile');
     const goToMain = () => navigate('/main');
     const goToOrders = () => navigate('/orders');
+    const logOut = () => navigate('/');
     const active = props.buttonId;
 
+
     return <div className={styles.header}>
-        <div className={styles.menu}>
-            <button className={active===0 ? styles.activeButton : null} onClick={goToProfile}>Профиль</button>
-            <button className={active===1 ? styles.activeButton : null} onClick={goToMain}>Главная</button>
-            <button className={active===2 ? styles.activeButton : null} onClick={goToOrders}>Заявки</button>
-        </div>
+        {<div className={styles.menu}>
+            <button onClick={goToMain}>Главная</button>
+            <button onClick={goToProfile}>Профиль</button>
+            <button onClick={goToOrders}>Заявки</button>
+            <button onClick={logOut}>Выйти</button>
+        </div>}
         <div className={styles.logo}>
             <SmallLogo/>
         </div>

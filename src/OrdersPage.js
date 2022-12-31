@@ -32,7 +32,7 @@ const OrdersPage = (props) => {
                 Архив заявок
             </button>
         </div>
-        {displayActiveOrders && <button className={styles.addOrder} onClick={() => navigate('/addorder')}>
+        {displayActiveOrders && <button className={styles.addOrder} onClick={() => navigate('/main')}>
             <span className={styles.addOrderLogo}>+</span>
             <span className={styles.addOrderText}>Создать заявку</span>
         </button>}

@@ -1,12 +1,13 @@
 import styles from "./RegistartionForm.module.css";
 import {useNavigate} from 'react-router-dom';
 import {useForm} from "react-hook-form";
+import profile from "./store/Profile";
 
 const RegistrationForm = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
     const navigate = useNavigate();
     const onSubmit = data => {
-        console.log(data);
+        profile.updateProfile(data.companyName, data.phoneNumber);
         navigate('/main');
     };
     const goToLogInPage = () => navigate('/login');
@@ -33,7 +34,23 @@ const RegistrationForm = () => {
                     }
                 </label>
                 <label className={styles.input}>
-                    <span className={styles.inputFieldName}>Логин</span>
+                    <span className={styles.inputFieldName}>Номер телефона</span>
+                    <input {...register("phoneNumber", { required: true, minLength: 11, maxLength: 11 })}
+                           aria-invalid={errors.phoneNumber ? "true" : "false"}
+                           className={styles.inputField}
+                           placeholder="89991112233"
+                           type="text"
+                    />
+                    {
+                        {
+                            'required': <span role="alert" className={styles.error}>Это поле обязательно</span>,
+                            'minLength': <span role="alert" className={styles.error}>Номер должен содержать 11 цифр</span>,
+                            'maxLength': <span role="alert" className={styles.error}>Номер должен содержать 11 цифр</span>
+                        }[errors.phoneNumber?.type]
+                    }
+                </label>
+                <label className={styles.input}>
+                    <span className={styles.inputFieldName}>Логин (8-30 символов)</span>
                     <input {...register("login", { required: true, minLength: 8, maxLength: 30 })}
                            aria-invalid={errors.companyName ? "true" : "false"}
                            className={styles.inputField} placeholder="Придумайте логин из 8-30 символов"
@@ -48,7 +65,7 @@ const RegistrationForm = () => {
                     }
                 </label>
                 <label className={styles.input}>
-                    <span className={styles.inputFieldName}>Пароль</span>
+                    <span className={styles.inputFieldName}>Пароль (8-30 символов)</span>
                     <input {...register("password", { required: true, minLength: 8, maxLength: 30 })}
                            aria-invalid={errors.password ? "true" : "false"}
                            className={styles.inputField} placeholder="Придумайте пароль из 8-30 символов"

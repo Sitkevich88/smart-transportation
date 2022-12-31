@@ -13,7 +13,7 @@
     border-radius: 20px;
     background-color: #1C12DB;
     color: white;
-    font-family: 'Inter';
+    font-family: Inter;
     font-size: 18px;
     font-weight: bold;
 }
@@ -61,7 +61,7 @@
 }
 
 .comment{
-    font-family: 'Inter';
+    font-family: Inter;
     font-weight: bold;
 }
 
@@ -74,7 +74,7 @@
     position: fixed;
     bottom: 0;
     right: 30px;
-    display: flex;
+    display: none;
     flex-direction: row;
     align-items: flex-end;
     justify-content: flex-end;

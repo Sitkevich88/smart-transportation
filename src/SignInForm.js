@@ -49,7 +49,7 @@ const SignInForm = () => {
                 </label>
             </div>
             <div className={styles.bottom}>
-                <p className={styles.suggestion}>Уже зарегестрированы? <span className={styles.link} onClick={goToRegistrationPage}>Войдите</span> </p>
+                <p className={styles.suggestion}>Ещё не зарегестрированы? <span className={styles.link} onClick={goToRegistrationPage}>Зарегестрируйтесь</span> </p>
                 <input type="submit" value="Войти" className={styles.sendFormButton}/>
             </div>
         </form>

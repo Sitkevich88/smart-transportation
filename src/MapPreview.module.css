@@ -19,8 +19,8 @@
     height: 440px;
     border-radius: 20px;
     outline-offset: 0.5rem;
-    border: 5px solid #2E6415;
-    background-color: rgba(213, 227, 206, 0.7);
+    border: 5px solid rgba(28, 18, 219, 0.9);
+    background-color: rgba(213, 227, 206, 0.85);
 }
 
 .svg{

@@ -17,32 +17,36 @@
 .menu{
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
-    width: 60%;
+    justify-content: space-between;
+    width: 35%;
+    position: absolute;
+    right: 20px;
 }
 
 .menu button{
-    background-color: #1C12DB;
-    color: white;
+    background-color: rgba(28, 18, 219, 0);
+    color: #2d1a28;
     height: 35px;
-    width: 30%;
-    border: 1px solid #1C12DB;
-    border-radius: 20px;
+    width: 25%;
+    border: 1px solid rgba(28, 18, 219, 0);
     font-family: Inter;
     font-size: 15px;
-    font-weight: bold;
+    font-weight: 900;
     cursor: pointer;
 }
 
-button.activeButton{
-    background-color: #370A80;
-}
-
-.menu button:hover{
+.menu button:hover:not(:last-child){
+    color: white;
     background-color: rgba(59, 54, 162, 0.85);
     border-color: rgba(59, 54, 162, 0.85);
 }
 
+.menu button:hover:last-child{
+    color: white;
+    background-color: rgb(218, 27, 43);
+}
+
 .logo{
-    margin-right: 10px;
+    position: absolute;
+    left: 30px;
 }

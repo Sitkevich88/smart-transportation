@@ -22,6 +22,9 @@ const MainPage = () => {
         <div className={styles.ellipsesWrapper}>
             <div className={styles.ellipse}></div>
         </div>
+        <span className={styles.callToAction}>
+            Выберите, между какими станциями доставить груз
+        </span>
         <div className={styles.searchFieldsWrapper}>
             <label className={styles.fieldLabelWrapper}>
                 <span className={styles.searchFieldLabel}>От</span>

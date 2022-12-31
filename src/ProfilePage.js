@@ -6,26 +6,34 @@ import stylesStartPage from "./StartPage.module.css";
 import styles from "./ProfilePage.module.css";
 import profile from "./store/Profile";
 import {observer} from "mobx-react"
+import editIcon from "./edit-icon.png";
 
 const ProfilePage = observer(() => {
     const { register, formState: { errors }, handleSubmit, setValue } = useForm({
         defaultValues: {companyName: profile.companyName, phoneNumber: profile.phoneNumber}
     });
-    const [ isEditing, setIsEditing ] = useState(false);
+
+    const [ isEditingCompanyName, setIsEditingCompanyName] = useState(false);
+    const [ isEditingPhoneNumber, setIsEditingPhoneNumber] = useState(false);
+
+    const disableAll = () => {
+        setIsEditingCompanyName(false);
+        setIsEditingPhoneNumber(false);
+    };
     
     const onSubmit = data => {
-        setIsEditing(false);
+        disableAll();
         profile.updateProfile(data.companyName, data.phoneNumber);
     };
-    
-    const toggle = () => {
-        setIsEditing(!isEditing);
-    };
 
-    const recover = () => {
+    const recoverCompanyName = () => {
         setValue('companyName', profile.companyName);
+        setIsEditingCompanyName(false);
+    }
+
+    const recoverPhoneNumber = () => {
         setValue('phoneNumber', profile.phoneNumber);
-        toggle();
+        setIsEditingPhoneNumber(false);
     }
 
     return (<>
@@ -45,8 +53,17 @@ const ProfilePage = observer(() => {
                                aria-invalid={errors.companyName ? "true" : "false"}
                                className={styles.inputField} placeholder="Введите название вашей компании"
                                type="text"
-                               disabled={!isEditing}
+                               disabled={!isEditingCompanyName}
                         />
+                        <div className={styles.fieldButtons}>
+                            {isEditingCompanyName ?
+                                <div className={styles.decisionButtons}>
+                                    <input type="submit" value="✔" className={styles.approveFormButton}/>
+                                    <input type="button" value="✖" className={styles.disapproveFormButton} onClick={() => recoverCompanyName()}/>
+                                </div>
+                                : <img src={editIcon} alt="Редактировать" className={styles.icon} onClick={() => setIsEditingCompanyName(true)}/>
+                            }
+                        </div>
                         {
                             {
                                 'minLength': <span role="alert" className={styles.error}>Минимальная длина названия 2 символа</span>,
@@ -60,8 +77,17 @@ const ProfilePage = observer(() => {
                                aria-invalid={errors.phoneNumber ? "true" : "false"}
                                className={styles.inputField} placeholder="Введите номер телефона вашей компании"
                                type="tel"
-                               disabled={!isEditing}
+                               disabled={!isEditingPhoneNumber}
                         />
+                        <div className={styles.fieldButtons}>
+                            {isEditingPhoneNumber ?
+                                <div className={styles.decisionButtons}>
+                                    <input type="submit" value="✔" className={styles.approveFormButton}/>
+                                    <input type="button" value="✖" className={styles.disapproveFormButton} onClick={() => recoverPhoneNumber()}/>
+                                </div>
+                                : <img src={editIcon} alt="Редактировать" className={styles.icon} onClick={() => setIsEditingPhoneNumber(true)}/>
+                            }
+                        </div>
                         {
                             {
                                 'minLength': <span role="alert" className={styles.error}>Длина номера телефона 11 символов</span>,
@@ -70,14 +96,6 @@ const ProfilePage = observer(() => {
                             }[errors.phoneNumber?.type]
                         }
                     </label>
-                </div>
-                <div className={styles.bottom}>
-                    {!isEditing && <input type="button" value="Редактировать" className={styles.editFormButton} onClick={() => toggle()}/>}
-                    {isEditing && <>
-                        <input type="button" value="✖" className={styles.disapproveFormButton} onClick={() => recover()}/>
-                        <input type="submit" value="✔" className={styles.approveFormButton}/>
-                    </>
-                    }
                 </div>
             </form>
         </div>

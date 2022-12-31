@@ -101,7 +101,7 @@ class Orders {
         }
         this.activeOrders.unshift({
             id: this.activeOrders[0].id + 1,
-            creationDate: `${today.getDay()} ${month} ${today.getFullYear()} г.`,
+            creationDate: `${today.getDate()} ${month} ${today.getFullYear()} г.`,
             from: order.from,
             to: order.to,
             cargoType: order.type,

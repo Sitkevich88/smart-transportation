@@ -5,7 +5,10 @@ const SmallLogo = () => {
     return (<>
         <div className={styles.wrapper}>
             <img src={logotype} alt="Logo" className={styles.icon}/>
-            <h1 className={styles.company_name}>Smart transportation</h1>
+            <div className={styles.rightContainer}>
+                <h1 className={styles.companyName}>Smart transportation</h1>
+                <span className={styles.phoneNumber}>+7(911)222-33-44</span>
+            </div>
         </div>
     </>);
 }
