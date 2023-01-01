@@ -1,5 +1,5 @@
 import {useForm} from "react-hook-form";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import CustomerHeader from "./CustomerHeader";
 import mainPageStyles from "./MainPage.module.css";
 import stylesStartPage from "./StartPage.module.css";
@@ -9,9 +9,13 @@ import {observer} from "mobx-react"
 import editIcon from "./edit-icon.png";
 
 const ProfilePage = observer(() => {
-    const { register, formState: { errors }, handleSubmit, setValue } = useForm({
+    const { register, formState: { errors }, handleSubmit, setValue, reset } = useForm({
         defaultValues: {companyName: profile.companyName, phoneNumber: profile.phoneNumber}
     });
+
+    useEffect(() => {
+        profile.loadCurrent().then(reset);
+    },[]);
 
     const [ isEditingCompanyName, setIsEditingCompanyName] = useState(false);
     const [ isEditingPhoneNumber, setIsEditingPhoneNumber] = useState(false);
@@ -21,9 +25,9 @@ const ProfilePage = observer(() => {
         setIsEditingPhoneNumber(false);
     };
     
-    const onSubmit = data => {
+    const onSubmit = newProfile => {
         disableAll();
-        profile.updateProfile(data.companyName, data.phoneNumber);
+        profile.update(newProfile).then(reset);
     };
 
     const recoverCompanyName = () => {

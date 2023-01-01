@@ -1,14 +1,33 @@
 import {makeAutoObservable} from "mobx";
+import profileService from "../service/ProfileService";
 
 class Profile {
-    companyName:string = "ООО Агроном";
-    phoneNumber:string = "89112223344";
+    companyName:string = ""
+    phoneNumber:string = ""
 
     constructor() {
         makeAutoObservable(this);
     }
 
-    updateProfile(companyName, phoneNumber){
+    async loadCurrent() {
+        return profileService
+            .getCurrentProfile()
+            .then(profile => {
+                this.updateFields(profile.companyName, profile.phoneNumber);
+                return profile;
+            });
+    }
+
+    async update(newProfile) {
+        return profileService
+            .updateProfile(newProfile)
+            .then(profile => {
+                this.updateFields(profile.companyName, profile.phoneNumber);
+                return profile;
+            });
+    }
+
+    updateFields(companyName, phoneNumber){
         this.companyName = companyName;
         this.phoneNumber = phoneNumber;
         console.log('updated profile:', companyName, phoneNumber)

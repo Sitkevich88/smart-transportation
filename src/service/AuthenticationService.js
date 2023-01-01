@@ -52,6 +52,11 @@ class AuthenticationService{
         document.cookie = `Authorization=${jwt}; max-age=${3600*24*7}`;
     }
 
+    getJWT(){
+        const match = document.cookie.match(new RegExp('(^| )Authorization=([^;]+)'));
+        return match ? match[2] : null;
+    }
+
     #setRole(role: string){
         localStorage.setItem('role', role);
     }

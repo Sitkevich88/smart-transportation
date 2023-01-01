@@ -7,6 +7,14 @@ const serverAPI = {
 
     get signUp(){
         return `${this._origin}/auth/signup`;
+    },
+
+    get currentProfile(){
+        return `${this._origin}/user/profile`;
+    },
+
+    get updateProfile(){
+        return `${this._origin}/user/profile/update`;
     }
 };
 
