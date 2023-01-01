@@ -1,13 +1,17 @@
 import styles from "./CustomerHeader.module.css";
 import {useNavigate} from "react-router-dom";
 import SmallLogo from "./SmallLogo";
+import authenticationService from "./service/AuthenticationService";
 
 const CustomerHeader = (props) => {
     const navigate = useNavigate();
     const goToProfile = () => navigate('/profile');
     const goToMain = () => navigate('/main');
     const goToOrders = () => navigate('/orders');
-    const logOut = () => navigate('/');
+    const logOut = () => {
+        authenticationService.logout();
+        navigate('/');
+    };
     const active = props.buttonId;
 
 

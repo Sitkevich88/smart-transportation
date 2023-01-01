@@ -13,13 +13,32 @@ class AuthenticationService{
             body: JSON.stringify(credentials)
         });
 
+         return this.#convertServerResponse(authentication);
+    }
+
+    async signUp(user){
+        const authentication = fetch(serverAPI.signUp, {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Accept-Language': 'ru'
+            },
+            body: JSON.stringify(user)
+        });
+
+        return this.#convertServerResponse(authentication);
+    }
+
+    async #convertServerResponse(authentication){
         return authentication
             .then(response => {
                 return response.json().then(authenticationResponse => {
                     switch (response.status){
                         case 200:
-                            this.setJWT(authenticationResponse.jwt);
-                            this.setRole(authenticationResponse.role);
+                            this.#setJWT(authenticationResponse.jwt);
+                            this.#setRole(authenticationResponse.role);
                             return {success: true, errorMessage: null};
                         default:
                             return {success: false, errorMessage: authenticationResponse.errorMessage};
@@ -29,12 +48,17 @@ class AuthenticationService{
             .catch(err => {return {success: false, errorMessage: err};});
     }
 
-    setJWT(jwt: string){
+    #setJWT(jwt: string){
         document.cookie = `Authorization=${jwt}; max-age=${3600*24*7}`;
     }
 
-    setRole(role: string){
+    #setRole(role: string){
         localStorage.setItem('role', role);
+    }
+
+    logout(){
+        document.cookie = `Authorization=; max-age=0`;
+        localStorage.removeItem('role');
     }
 }
 
