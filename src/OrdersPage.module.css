@@ -4,6 +4,7 @@ p{
 
 .buttons{
     width: 80%;
+    min-width: fit-content;
     display: flex;
     justify-content: space-between;
     margin: 15px auto;
@@ -11,6 +12,7 @@ p{
 
 .buttons button{
     width: 30%;
+    min-width: fit-content;
     height: 35px;
     font-size: 20px;
     font-weight: bold;
@@ -51,6 +53,7 @@ p{
     border-radius: 20px;
     padding: 20px;
     width: 42%;
+    min-width: fit-content;
     gap: 10px;
 }
 
@@ -90,6 +93,12 @@ p{
     align-items: center;
     padding: 0;
     margin: 10px auto;
+}
+
+@media (max-width:900px){
+    .addOrder{
+        display: none;
+    }
 }
 
 .addOrderLogo{

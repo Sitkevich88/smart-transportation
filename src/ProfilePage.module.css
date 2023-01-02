@@ -46,6 +46,17 @@
     flex-direction: column;
 }
 
+.fakeField{
+    background-color: rgba(134, 10, 24, 0);
+    width: 575px;
+    height: 42px;
+    position: absolute;
+    display: inline-block;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    transform: translate(0, 43.5%);
+}
+
 .inputFieldName{
     font-family: Inter;
     font-size: 15px;
@@ -62,6 +73,11 @@
     font-size: 15px;
     font-weight: bold;
     padding-left: 30px;
+}
+
+.inputField:read-only{
+    color: #5b626f;
+    background-color: #e9e9f9;
 }
 
 .inputField:focus{

@@ -19,6 +19,7 @@
     flex-direction: row;
     justify-content: space-between;
     width: 35%;
+    min-width: fit-content;
     position: absolute;
     right: 20px;
 }
@@ -49,4 +50,10 @@
 .logo{
     position: absolute;
     left: 30px;
+}
+
+@media (max-width:960px){
+    .logo h1, .logo span{
+        display: none;
+    }
 }

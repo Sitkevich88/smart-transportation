@@ -20,6 +20,16 @@ const ProfilePage = observer(() => {
         setIsEditingCompanyName(false);
         setIsEditingPhoneNumber(false);
     };
+
+    const enableField = (num) => {
+        setIsEditingCompanyName(num === 0);
+        setIsEditingPhoneNumber(num === 1);
+
+        if (num === 0)
+            recoverPhoneNumber()
+        else
+            recoverCompanyName()
+    }
     
     const onSubmit = data => {
         disableAll();
@@ -47,14 +57,15 @@ const ProfilePage = observer(() => {
             </div>
             <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
                 <div className={styles.inputs}>
-                    <label className={styles.input}>
+                    <label className={styles.input} >
                         <span className={styles.inputFieldName}>Название компании</span>
                         <input {...register("companyName", { minLength: 2, required: true})}
                                aria-invalid={errors.companyName ? "true" : "false"}
                                className={styles.inputField} placeholder="Введите название вашей компании"
                                type="text"
-                               disabled={!isEditingCompanyName}
+                               readOnly={!isEditingCompanyName}
                         />
+                        <div className={styles.fakeField} onClick={() => enableField(0)}></div>
                         <div className={styles.fieldButtons}>
                             {isEditingCompanyName ?
                                 <div className={styles.decisionButtons}>
@@ -71,14 +82,15 @@ const ProfilePage = observer(() => {
                             }[errors.companyName?.type]
                         }
                     </label>
-                    <label className={styles.input}>
+                    <label className={styles.input} >
                         <span className={styles.inputFieldName}>Номер телефона</span>
                         <input {...register("phoneNumber", { required: true, minLength: 11, maxLength: 11})}
                                aria-invalid={errors.phoneNumber ? "true" : "false"}
                                className={styles.inputField} placeholder="Введите номер телефона вашей компании"
                                type="tel"
-                               disabled={!isEditingPhoneNumber}
+                               readOnly={!isEditingPhoneNumber}
                         />
+                        <div className={styles.fakeField} onClick={() => enableField(1)}></div>
                         <div className={styles.fieldButtons}>
                             {isEditingPhoneNumber ?
                                 <div className={styles.decisionButtons}>

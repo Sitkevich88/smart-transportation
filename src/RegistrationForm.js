@@ -53,7 +53,7 @@ const RegistrationForm = () => {
                     <span className={styles.inputFieldName}>Логин (8-30 символов)</span>
                     <input {...register("login", { required: true, minLength: 8, maxLength: 30 })}
                            aria-invalid={errors.companyName ? "true" : "false"}
-                           className={styles.inputField} placeholder="Придумайте логин из 8-30 символов"
+                           className={styles.inputField +' '+ styles.visibleField} placeholder="Придумайте логин из 8-30 символов"
                            type="text"
                     />
                     {
@@ -68,7 +68,7 @@ const RegistrationForm = () => {
                     <span className={styles.inputFieldName}>Пароль (8-30 символов)</span>
                     <input {...register("password", { required: true, minLength: 8, maxLength: 30 })}
                            aria-invalid={errors.password ? "true" : "false"}
-                           className={styles.inputField} placeholder="Придумайте пароль из 8-30 символов"
+                           className={styles.inputField +' '+ styles.visibleField} placeholder="Придумайте пароль из 8-30 символов"
                            type="password"
                     />
                     {
