@@ -1,3 +1,4 @@
+/*
 import {makeAutoObservable} from "mobx";
 import {Role} from "../helpers/Role";
 
@@ -18,4 +19,4 @@ class User {
 
 }
 
-export default new User();
+export default new User();*/

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { Route, BrowserRouter, Routes } from "react-router-dom";
 import StartPage from "./StartPage";
 import RegistrationPage from "./RegistrationPage";
@@ -8,11 +8,28 @@ import ProfilePage from "./ProfilePage";
 import OrdersPage from "./OrdersPage";
 import CreateOrderPage from "./CreateOrderPage";
 import CustomerRoute from "./protected/CustomerRoute";
+import mapStorage from "./service/MapUpdater";
+import BigLogo from "./BigLogo";
 
-function App() {
-    return (<>
+const App = () => {
+    const [isLoading, setIsLoading] = useState(true);
 
-        <BrowserRouter>
+    useEffect(()=>{
+        mapStorage
+            .update()
+            .then(() => {
+                setIsLoading(false);
+            });
+    },[])
+
+    return isLoading
+        ? <>
+            <BigLogo/>
+            <div style={{textAlign: "center", fontSize: "50px", marginTop: "50px", fontFamily: "Inter"}}>
+                Загрузка карты...
+            </div>
+        </>
+        : <BrowserRouter>
             <Routes>
                 <Route path="/" element={<StartPage />} />
                 <Route path="/registration" element={<RegistrationPage />} />
@@ -25,8 +42,7 @@ function App() {
                     <Route path="/profile" element={<ProfilePage />} />
                 </Route>
             </Routes>
-        </BrowserRouter>
-    </>);
-}
+        </BrowserRouter>;
+};
 
 export default App;

@@ -6,7 +6,7 @@ function PathFinderService(stations, intersections){
         const trainLinesIds = [];
 
         stations.forEach(st => {
-            const lineId = st.line_id;
+            const lineId = st.lineId;
 
             if (!linesMap.has(lineId)) {
                 linesMap.set(lineId, []);
@@ -32,7 +32,7 @@ function PathFinderService(stations, intersections){
         const intDictionary = {};
         intersections.forEach((curInt) => {
             const intId = curInt.id;
-            const stId = curInt.station_id;
+            const stId = curInt.stationId;
 
             if (!intDictionary.hasOwnProperty(intId + ""))
                 intDictionary[intId + ""] = [];

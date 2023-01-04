@@ -15,6 +15,10 @@ const serverAPI = {
 
     get updateProfile(){
         return `${this._origin}/user/profile/update`;
+    },
+
+    get map(){
+        return `${this._origin}/common/map`;
     }
 };
 
