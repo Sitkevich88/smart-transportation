@@ -1,4 +1,5 @@
 import serverAPI from "./Server";
+import {Role} from "../helpers/Role";
 
 class AuthenticationService{
      async signIn(credentials){
@@ -57,8 +58,26 @@ class AuthenticationService{
         return match ? match[2] : null;
     }
 
+    hasJWT(){
+        return !!this.getJWT();
+    }
+
     #setRole(role: string){
         localStorage.setItem('role', role);
+    }
+
+    #getRole(){
+        return localStorage.getItem('role') ?? "";
+    }
+
+    seemToBeCustomer(){
+        return this.#getRole() === Role.Customer
+            && this.hasJWT();
+    }
+
+    seemToBeAdmin(){
+        return this.#getRole() === Role.Admin
+            && this.hasJWT();
     }
 
     logout(){
