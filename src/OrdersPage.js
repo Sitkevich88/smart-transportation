@@ -7,11 +7,13 @@ import stylesStartPage from "./StartPage.module.css";
 import orders from "./store/Orders";
 import Map from "./Map";
 import PaymentPopUp from "./PaymentPopUp";
+import ordersService from "./service/OrdersService";
 
 const OrdersPage = (props) => {
     const [displayActiveOrders, setDisplayActiveOrders] = useState(true);
     const navigate = useNavigate();
     const [isPopUpOpened, setIsPopUpOpened] = useState(false);
+    ordersService.getOrders();
 
     return (<>
         <CustomerHeader buttonId={2}/>

@@ -9,6 +9,10 @@ const serverAPI = {
         return `${this._origin}/auth/signup`;
     },
 
+    get map(){
+        return `${this._origin}/common/map`;
+    },
+
     get currentProfile(){
         return `${this._origin}/user/profile`;
     },
@@ -17,8 +21,8 @@ const serverAPI = {
         return `${this._origin}/user/profile/update`;
     },
 
-    get map(){
-        return `${this._origin}/common/map`;
+    get myOrders(){
+        return `${this._origin}/user/orders`;
     }
 };
 

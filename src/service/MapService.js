@@ -3,10 +3,10 @@ import React from "react";
 import PathFinderService from "./PathFinderService";
 
 function MapService(){
+    const notSelected = '#666685';
     let stations: Array;
     let trainLines: Array;
     let intersections: Array;
-    const notSelected = '#666685';
     let path = [];
     let _height = null;
     let _width = null;
