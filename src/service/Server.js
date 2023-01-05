@@ -25,6 +25,10 @@ const serverAPI = {
         return `${this._origin}/user/orders`;
     },
 
+    get addOrder(){
+        return `${this._origin}/user/orders/add`;
+    },
+
     get cargoTypes(){
         return `${this._origin}/user/cargo/types`;
     }

@@ -12,9 +12,7 @@ const CreateOrderPage = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
     let {station1, station2} = [null, null];
     const onSubmit = data => {
-        console.log(data);
-        orders.addActiveOrder(data);
-        navigate('/orders');
+        orders.addOrder(data).then(() => navigate('/orders'));
     };
     const stationsOptions = mapService.getUniqueStationNames().map(name => {
         return <option key={name + '_stationName'} value={name}>{name}</option>;
@@ -34,13 +32,14 @@ const CreateOrderPage = () => {
     }
 
     const types = [
-        <option disabled selected value style={{display: "none"}} key="empty"></option>,
-        <option key="Нефть" value="Нефть">Нефть</option>,
-        <option key="Пропан" value="Пропан">Пропан</option>,
-        <option key="Песок" value="Песок">Песок</option>,
-        <option key="Щебень" value="Щебень">Щебень</option>,
-        <option key="Другое" value="Другое">Другое</option>
+        <option disabled selected value style={{display: "none"}} key="empty"></option>
     ];
+
+    types.push(...orders.cargoTypes.map(cargoType => {
+        return <option key={cargoType} value={cargoType}>
+            {cargoType}
+        </option>;
+    }));
 
     return <>
         <div className={mainPageStyles.ellipsesWrapper}>

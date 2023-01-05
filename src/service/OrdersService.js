@@ -47,7 +47,32 @@ class OrdersService {
                             return [];
                     }
                 });
-            })
+            });
+    }
+
+    async addOrder(order){
+        return fetch(serverAPI.addOrder, {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Accept-Language': 'ru',
+                'Authorization': authenticationService.getJWT()
+            },
+            body: JSON.stringify(order)
+        })
+            .then(response => {
+                return response.json().then(addOrderResponse => {
+                    switch (response.status){
+                        case 200:
+                            return addOrderResponse;
+                        default:
+                            console.log('Could not add order');
+                            return {};
+                    }
+                });
+            });
     }
 }
 

@@ -30,7 +30,6 @@ class Profile {
     updateFields(companyName, phoneNumber){
         this.companyName = companyName;
         this.phoneNumber = phoneNumber;
-        console.log('updated profile:', companyName, phoneNumber)
     }
 }
 

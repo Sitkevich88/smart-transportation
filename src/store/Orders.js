@@ -28,20 +28,8 @@ class Orders {
         return ordersService
             .getOrders()
             .then(orders => {
-                console.log('updated orders')
                 const receivedOrders = orders.map(order => {
-                    return {
-                        id: order.id,
-                        creationDate: this.convertServerDate(order.creationDate),
-                        from: mapService.getStationNameById(order.station1),
-                        to: mapService.getStationNameById(order.station2),
-                        cargoType: order.cargoType,
-                        weight: order.weight,
-                        dispatchDate: null,
-                        receiptDate: null,
-                        status: order.status,
-                        comment: order.comment
-                    };
+                    return this.convertServerOrder(order);
                 });
                 this.activeOrders = receivedOrders.filter(order => order.status !== 'В архиве');
                 this.oldOrders = receivedOrders.filter(order => order.status === 'В архиве');
@@ -49,11 +37,28 @@ class Orders {
     }
 
     async updateCargoTypes(){
-        ordersService
+        return ordersService
             .getCargoTypes()
             .then(cargoTypes => {
-                console.log('updated cargo types');
                 this.cargoTypes = cargoTypes;
+            });
+    }
+
+    async addOrder(order){
+        const request = {
+            station1: mapService.getStationIdByName(order.from),
+            station2: mapService.getStationIdByName(order.to),
+            cargoType: this.cargoTypes.findIndex(cargoType => cargoType === order.type) + 1,
+            weight: parseFloat(order.weight),
+            comment: order.comment
+        };
+
+        return ordersService
+            .addOrder(request)
+            .then(newOrder => {
+                this.activeOrders.unshift(
+                    this.convertServerOrder(newOrder)
+                );
             });
     }
 
@@ -68,59 +73,19 @@ class Orders {
         return `${day} ${ monthsInGenitive[monthNumber - 1] ?? "??" } ${year} г.`;
     }
 
-    addActiveOrder(order){
-        const today = new Date();
-        let month;
-        switch (today.getMonth()){
-            case 0:
-                month = 'января';
-                break;
-            case 1:
-                month = 'февраля';
-                break;
-            case 2:
-                month = 'марта';
-                break;
-            case 3:
-                month = 'апреля';
-                break;
-            case 4:
-                month = 'мая';
-                break;
-            case 5:
-                month = 'июня';
-                break;
-            case 6:
-                month = 'июля';
-                break;
-            case 7:
-                month = 'августа';
-                break;
-            case 8:
-                month = 'сентября';
-                break;
-            case 9:
-                month = 'октября';
-                break;
-            case 10:
-                month = 'ноября';
-                break;
-            default:
-                month = 'декабря';
-                break;
-        }
-        this.activeOrders.unshift({
-            id: this.activeOrders[0].id + 1,
-            creationDate: `${today.getDate()} ${month} ${today.getFullYear()} г.`,
-            from: order.from,
-            to: order.to,
-            cargoType: order.type,
+    convertServerOrder(order){
+        return {
+            id: order.id,
+            creationDate: this.convertServerDate(order.creationDate),
+            from: mapService.getStationNameById(order.station1),
+            to: mapService.getStationNameById(order.station2),
+            cargoType: order.cargoType,
             weight: order.weight,
             dispatchDate: null,
             receiptDate: null,
-            status: 'На рассмотрении',
+            status: order.status,
             comment: order.comment
-        });
+        };
     }
 
 }
