@@ -1,5 +1,6 @@
 import serverAPI from "./Server";
 import {Role} from "../helpers/Role";
+import mapService from "./MapService";
 
 class AuthenticationService{
      async signIn(credentials){
@@ -83,6 +84,7 @@ class AuthenticationService{
     logout(){
         document.cookie = `Authorization=; max-age=0`;
         localStorage.removeItem('role');
+        mapService.unLoadPath();
     }
 }
 

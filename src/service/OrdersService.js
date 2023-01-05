@@ -17,10 +17,10 @@ class OrdersService {
                 return response.json().then(ordersResponse => {
                     switch (response.status){
                         case 200:
-                            console.log(ordersResponse)
-                            return ordersResponse;
+                            return ordersResponse.orders;
                         default:
-                            console.log('Could not get map from server');
+                            console.log('Could not get orders from server');
+                            return [];
                     }
                 });
             })

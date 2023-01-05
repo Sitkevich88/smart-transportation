@@ -33,3 +33,23 @@
     color: #1C12DB;
     font-size: 20px;
 }
+
+@media (max-width:1100px){
+
+    .name_comment_wrapper{
+        margin-right: 100px;
+    }
+
+    .icon{
+        height: 50px;
+        width: 50px;
+    }
+
+    .company_name{
+        font-size: 30px;
+    }
+
+    .comment{
+        font-size: 15px;
+    }
+}

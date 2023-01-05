@@ -26,7 +26,7 @@ const App = () => {
         ? <>
             <BigLogo/>
             <div style={{textAlign: "center", fontSize: "50px", marginTop: "50px", fontFamily: "Inter"}}>
-                Загрузка карты...
+                Загрузка...
             </div>
         </>
         : <BrowserRouter>

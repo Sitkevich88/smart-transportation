@@ -2,90 +2,87 @@ import styles from "../MapPreview.module.css";
 import React from "react";
 import PathFinderService from "./PathFinderService";
 
-function MapService(){
-    const notSelected = '#666685';
-    let stations: Array;
-    let trainLines: Array;
-    let intersections: Array;
-    let path = [];
-    let _height = null;
-    let _width = null;
-    let pathFinderService;
+class MapService{
+    notSelected = '#666685';
+    stations: Array;
+    trainLines: Array;
+    intersections: Array;
+    path = [];
+    _height = null;
+    _width = null;
+    pathFinderService;
 
-    this.isPathLoaded = () => path.length >= 2;
+    isPathLoaded(){
+        return this.path.length >=2;
+    }
 
-    this.getStations = () => stations;
-
-    this.getTrainLines = () => trainLines;
-
-    this.getIntersections = () => intersections;
-
-    this.getUniqueStationNames = () => {
+    getUniqueStationNames(){
         let names = [];
 
-        stations.forEach(st => {
+        this.stations.forEach(st => {
             if (!names.find(n => n === st.name))
                 names.push(st.name);
         })
         names.sort();
         return names;
-    };
+    }
 
-    this.loadMap = (mapStations, mapLines, stationIntersections) => {
-        stations = mapStations.sort((st1, st2) =>
+    loadMap(mapStations, mapLines, stationIntersections){
+        this.stations = mapStations.sort((st1, st2) =>
             (st1.lineId * 1000 + st1.order) - (st2.lineId * 1000 + st2.order)
         );
-        trainLines = mapLines;
-        intersections = stationIntersections.sort((int1, int2) =>
+        this.trainLines = mapLines;
+        this.intersections = stationIntersections.sort((int1, int2) =>
             (int1.id * 100 + int1.stationId) - (int2.id * 100 + int2.stationId)
         );
 
-        pathFinderService = new PathFinderService(stations, intersections);
-    };
+        this.pathFinderService = new PathFinderService(this.stations, this.intersections);
+    }
 
-    this.normaliseStations = (height, width) => {
-        _height = height;
-        _width = width;
-        const minX = Math.min(...stations.map(station => station.x));
-        const maxX = Math.max(...stations.map(station => station.x));
-        const minY = Math.min(...stations.map(station => station.y));
-        const maxY = Math.max(...stations.map(station => station.y));
+    normaliseStations(height, width){
+        this._height = height;
+        this._width = width;
+
+        const minX = Math.min(...this.stations.map(station => station.x));
+        const maxX = Math.max(...this.stations.map(station => station.x));
+        const minY = Math.min(...this.stations.map(station => station.y));
+        const maxY = Math.max(...this.stations.map(station => station.y));
 
         const proportion = 0.8;
         const scaleX = (maxX - minX) / (width * proportion);
         const scaleY = (maxY - minY) / (height * proportion);
 
-        stations.forEach(station => {
+        this.stations.forEach(station => {
             station.x = (station.x - minX) / scaleX + (width * (1 - proportion) / 2);
             station.y = (station.y - minY) / scaleY + (height * (1 - proportion) / 2);
         });
     }
 
-    this.getSVGPoints = () => {
+    getSVGPoints(){
         const points = [];
-        const r = _height ? _height/45 : 10;
+        const r = this._height ? this._height/45 : 10;
         const strokeWidth = r / 5;
         const offset = r / 10;
 
-        stations.forEach(st => {
-            if (intersections.find(intersection => st.id === intersection.stationId))
+        this.stations.forEach(st => {
+            if (this.intersections.find(intersection => st.id === intersection.stationId))
                 return;
 
             points.push(
-                this.isPathLoaded() && !!!path.find(stId => stId === st.id)
-                ? <circle cx={st.x} cy={st.y} r={r} style={{
-                        fill: notSelected
+                this.isPathLoaded() && !this.path.find(stId => stId === st.id)
+                    ? <circle cx={st.x} cy={st.y} r={r} style={{
+                        fill: this.notSelected
                     }} key={'pointId_' + st.id} stroke="black" strokeWidth={strokeWidth}/>
-                : <circle cx={st.x} cy={st.y} r={r} style={{
-                    fill: trainLines.find(line => st.lineId === line.id).name
-                }} key={'pointId_' + st.id} stroke="black" strokeWidth={strokeWidth}/>
+                    : <circle cx={st.x} cy={st.y} r={r} style={{
+                        fill: this.trainLines.find(line => st.lineId === line.id).name
+                    }} key={'pointId_' + st.id} stroke="black" strokeWidth={strokeWidth}/>
             );
         });
 
-        const drawIntersection = (intersectionId) =>{
-            const intersectedStations = intersections
+        const drawIntersection = (intersectionId) => {
+            const intersectedStations = this.intersections
                 .filter(intersection => intersection.id === intersectionId)
-                .map(intersection => stations.find(st => st.id === intersection.stationId));
+                .map(intersection => this.stations.find(st => st.id === intersection.stationId));
 
             const x = intersectedStations.reduce((sum, st) => sum + st.x, 0) / intersectedStations.length;
             const y = intersectedStations.reduce((sum, st) => sum + st.y, 0) / intersectedStations.length;
@@ -94,47 +91,47 @@ function MapService(){
             const strL = `M ${x} ${y-(r-offset)} A 1 1 0 0 0 ${x} ${y+(r-offset)} L ${x} ${y-(r-offset)} Z`;
             const strR = `M ${x} ${y-(r-offset)} L ${x} ${y+(r-offset)} A 1 1 0 0 0 ${x} ${y-(r-offset)} Z`;
 
-            if (this.isPathLoaded() && !!!path.find(stId => stId === intersectedStations[0].id)){
+            if (this.isPathLoaded() && !this.path.find(stId => stId === intersectedStations[0].id)){
                 points.push(<path d={strL}
                                   key={'intersectionId_'+ intersectionId + '.stationId_' + intersectedStations[0].id}
-                                  style={{fill: notSelected}}/>
+                                  style={{fill: this.notSelected}}/>
                 );
             }else{
                 points.push(<path d={strL}
                                   key={'intersectionId_'+ intersectionId + '.stationId_' + intersectedStations[0].id}
-                                  style={{fill: trainLines.find(line => intersectedStations[0].lineId === line.id).name}}/>
+                                  style={{fill: this.trainLines.find(line => intersectedStations[0].lineId === line.id).name}}/>
                 );
             }
 
-            if (this.isPathLoaded() && !!!path.find(stId => stId === intersectedStations[1].id)){
+            if (this.isPathLoaded() && !this.path.find(stId => stId === intersectedStations[1].id)){
                 points.push(<path d={strR}
                                   key={'intersectionId_'+ intersectionId + '.stationId_' + intersectedStations[1].id}
-                                  style={{fill: notSelected}}/>
+                                  style={{fill: this.notSelected}}/>
                 );
             }else{
                 points.push(<path d={strR}
                                   key={'intersectionId_'+ intersectionId + '.stationId_' + intersectedStations[1].id}
-                                  style={{fill: trainLines.find(line => intersectedStations[1].lineId === line.id).name}}/>
+                                  style={{fill: this.trainLines.find(line => intersectedStations[1].lineId === line.id).name}}/>
                 );
             }
             points.push(<circle cx={x} cy={y} r={r} key={intersectedStations[0].name} fillOpacity="0" stroke="black" strokeWidth={strokeWidth}/>);
-        }
+        };
 
-        new Set(intersections.map(intersection => intersection.id))
+        new Set(this.intersections.map(intersection => intersection.id))
             .forEach(val => drawIntersection(val));
 
         return points;
     }
 
-    this.getSVGLines = () => {
-        const strokeWidth = _height ? _height/45 : 10;
+    getSVGLines(){
+        const strokeWidth = this._height ? this._height/45 : 10;
         const lines = [];
         const linesMap = new Map();
         const pathMap = new Map();
         const trainLinesIds = [];
         const pathTrainLinesIds = [];
 
-        stations.forEach(st => {
+        this.stations.forEach(st => {
             const lineId = st.lineId;
 
             if (!linesMap.has(lineId)) {
@@ -143,7 +140,7 @@ function MapService(){
             }
             linesMap.get(lineId).push(st.x + ',' + st.y);
 
-            if (this.isPathLoaded() && !!path.find(stId => stId===st.id)){
+            if (this.isPathLoaded() && !!this.path.find(stId => stId === st.id)){
                 if (!pathMap.has(lineId)) {
                     pathMap.set(lineId, []);
                     pathTrainLinesIds.push(lineId);
@@ -153,13 +150,13 @@ function MapService(){
         });
 
         trainLinesIds.forEach(lineId => {
-            const color = pathTrainLinesIds.length>0 ? notSelected : trainLines.find(line => lineId === line.id).color;
+            const color = pathTrainLinesIds.length > 0 ? this.notSelected : this.trainLines.find(line => lineId === line.id).color;
             const values = linesMap.get(lineId).join(' ');
             lines.push(<polyline points={values} fill="none" stroke={color} strokeWidth={strokeWidth} opacity={0.8} key={'lineId_' + lineId} />)
         });
 
         pathTrainLinesIds.forEach(lineId => {
-            const color = trainLines.find(line => lineId === line.id).color;
+            const color = this.trainLines.find(line => lineId === line.id).color;
             const values = pathMap.get(lineId).join(' ');
             lines.push(<polyline points={values} fill="none" stroke={color} strokeWidth={strokeWidth} opacity={0.8} key={'selectedLineId_' + lineId} />)
         });
@@ -167,13 +164,14 @@ function MapService(){
         return lines;
     }
 
-    this.getSVGTexts = () => {
-        const fontSize = `${17 * (_width ? _width/630 : 1)}px`;
+    getSVGTexts(){
+        const fontSize = `${17 * (this._width ? this._width/630 : 1)}px`;
         const names = [];
         const texts = [];
-        const offsetX = -50 * (_width ? _width/600 : 1);
-        const offsetY = -20 * (_height ? _height/450 : 1);
-        stations.forEach(st => {
+        const offsetX = -50 * (this._width ? this._width/600 : 1);
+        const offsetY = -20 * (this._height ? this._height/450 : 1);
+
+        this.stations.forEach(st => {
             if (!names.find(n => n === st.name))
                 names.push(st.name);
             else
@@ -185,11 +183,17 @@ function MapService(){
         return <text className={styles.stations_names}>{texts}</text>;
     }
 
-    this.loadPath = (st1, st2) => {
-        path = pathFinderService.findPathIds(st1, st2);
-    };
+    loadPath(st1, st2){
+        this.path = this.pathFinderService.findPathIds(st1, st2);
+    }
 
-    this.unLoadPath = () => { path = [];};
+    unLoadPath(){
+        this.path = [];
+    }
+
+    getStationNameById(id){
+        return this.stations.find(station => station.id == id).name;
+    }
 }
 
 export default new MapService();

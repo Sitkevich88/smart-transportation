@@ -1,44 +1,9 @@
 import {makeAutoObservable} from "mobx";
+import ordersService from "../service/OrdersService";
+import mapService from "../service/MapService";
 
 class Orders {
-    activeOrders = [
-        {
-            id: 5686,
-            creationDate: '6 ноября 2022 г.',
-            from: 'Каменная',
-            to: 'Деревянная',
-            cargoType: 'Песок',
-            weight: 10000,
-            dispatchDate: null,
-            receiptDate: null,
-            status: 'Ожидает оплаты',
-            comment: null
-        },
-        {
-            id: 5685,
-            creationDate: '5 ноября 2022 г.',
-            from: 'Пальмовая',
-            to: 'Деревянная',
-            cargoType: 'Щебень',
-            weight: 20000,
-            dispatchDate: null,
-            receiptDate: null,
-            status: 'Ожидает оплаты',
-            comment: null
-        },
-        {
-            id: 5684,
-            creationDate: '4 ноября 2022 г.',
-            from: 'Пальмовая',
-            to: 'Мраморная',
-            cargoType: 'Другое',
-            weight: 150,
-            dispatchDate: null,
-            receiptDate: null,
-            status: 'Ожидает оплаты',
-            comment: 'Хрусталь привезу'
-        }
-    ];
+    activeOrders = [];
     oldOrders = [
         {
             id: 5680,
@@ -51,11 +16,82 @@ class Orders {
             receiptDate: '12 октября 2022 г.',
             status: 'Завершено',
             comment: null
-        }
+        } //todo delete later
     ];
 
     constructor() {
         makeAutoObservable(this);
+    }
+
+    async update(){
+        return ordersService
+            .getOrders()
+            .then(orders => {
+                console.log('updated')
+                const receivedOrders = orders.map(order => {
+                    return {
+                        id: order.id,
+                        creationDate: this.convertServerDate(order.creationDate),
+                        from: mapService.getStationNameById(order.station1),
+                        to: mapService.getStationNameById(order.station2),
+                        cargoType: order.cargoType,
+                        weight: order.weight,
+                        dispatchDate: null,
+                        receiptDate: null,
+                        status: order.status,
+                        comment: order.comment
+                    };
+                });
+                console.log(receivedOrders.length + " заказов");
+                this.activeOrders = receivedOrders.filter(order => order.status !== 'В архиве');
+                this.oldOrders = receivedOrders.filter(order => order.status === 'В архиве');
+            });
+    }
+
+    convertServerDate(date){
+        const [year, monthNumber, day] = date.split('-');
+        let month;
+
+        switch (monthNumber){
+            case 0:
+                month = 'января';
+                break;
+            case 1:
+                month = 'февраля';
+                break;
+            case 2:
+                month = 'марта';
+                break;
+            case 3:
+                month = 'апреля';
+                break;
+            case 4:
+                month = 'мая';
+                break;
+            case 5:
+                month = 'июня';
+                break;
+            case 6:
+                month = 'июля';
+                break;
+            case 7:
+                month = 'августа';
+                break;
+            case 8:
+                month = 'сентября';
+                break;
+            case 9:
+                month = 'октября';
+                break;
+            case 10:
+                month = 'ноября';
+                break;
+            default:
+                month = 'декабря';
+                break;
+        }
+
+        return `${day} ${month} ${year} г.`;
     }
 
     addActiveOrder(order){

@@ -1,19 +1,20 @@
 import CustomerHeader from "./CustomerHeader";
 import mainPageStyles from "./MainPage.module.css";
 import styles from "./OrdersPage.module.css";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import stylesStartPage from "./StartPage.module.css";
 import orders from "./store/Orders";
 import Map from "./Map";
 import PaymentPopUp from "./PaymentPopUp";
-import ordersService from "./service/OrdersService";
 
 const OrdersPage = (props) => {
     const [displayActiveOrders, setDisplayActiveOrders] = useState(true);
     const navigate = useNavigate();
     const [isPopUpOpened, setIsPopUpOpened] = useState(false);
-    ordersService.getOrders();
+    useEffect(()=>{
+        orders.update();
+    }, []);
 
     return (<>
         <CustomerHeader buttonId={2}/>
