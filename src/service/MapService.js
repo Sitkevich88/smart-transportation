@@ -194,6 +194,10 @@ class MapService{
     getStationNameById(id){
         return this.stations.find(station => station.id == id).name;
     }
+
+    getStationIdByName(name){
+        return this.stations.find(station => station.name === name).id;
+    }
 }
 
 export default new MapService();

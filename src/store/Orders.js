@@ -3,7 +3,7 @@ import ordersService from "../service/OrdersService";
 import mapService from "../service/MapService";
 
 class Orders {
-    activeOrders = [];
+    activeOrders = []
     oldOrders = [
         {
             id: 5680,
@@ -17,7 +17,8 @@ class Orders {
             status: 'Завершено',
             comment: null
         } //todo delete later
-    ];
+    ]
+    cargoTypes = []
 
     constructor() {
         makeAutoObservable(this);
@@ -27,7 +28,7 @@ class Orders {
         return ordersService
             .getOrders()
             .then(orders => {
-                console.log('updated')
+                console.log('updated orders')
                 const receivedOrders = orders.map(order => {
                     return {
                         id: order.id,
@@ -42,56 +43,29 @@ class Orders {
                         comment: order.comment
                     };
                 });
-                console.log(receivedOrders.length + " заказов");
                 this.activeOrders = receivedOrders.filter(order => order.status !== 'В архиве');
                 this.oldOrders = receivedOrders.filter(order => order.status === 'В архиве');
             });
     }
 
+    async updateCargoTypes(){
+        ordersService
+            .getCargoTypes()
+            .then(cargoTypes => {
+                console.log('updated cargo types');
+                this.cargoTypes = cargoTypes;
+            });
+    }
+
     convertServerDate(date){
+        const monthsInGenitive = [
+            'января', 'февраля', 'марта', 'апреля',
+            'мая', 'июня', 'июля', 'августа',
+            'сентября', 'октября', 'ноября', 'декабря'
+        ]
         const [year, monthNumber, day] = date.split('-');
-        let month;
 
-        switch (monthNumber){
-            case 0:
-                month = 'января';
-                break;
-            case 1:
-                month = 'февраля';
-                break;
-            case 2:
-                month = 'марта';
-                break;
-            case 3:
-                month = 'апреля';
-                break;
-            case 4:
-                month = 'мая';
-                break;
-            case 5:
-                month = 'июня';
-                break;
-            case 6:
-                month = 'июля';
-                break;
-            case 7:
-                month = 'августа';
-                break;
-            case 8:
-                month = 'сентября';
-                break;
-            case 9:
-                month = 'октября';
-                break;
-            case 10:
-                month = 'ноября';
-                break;
-            default:
-                month = 'декабря';
-                break;
-        }
-
-        return `${day} ${month} ${year} г.`;
+        return `${day} ${ monthsInGenitive[monthNumber - 1] ?? "??" } ${year} г.`;
     }
 
     addActiveOrder(order){

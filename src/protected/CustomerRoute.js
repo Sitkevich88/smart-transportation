@@ -7,12 +7,16 @@ import BigLogo from "../BigLogo";
 const CustomerRoute = () => {
     const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(()=>{
-        orders
-            .update()
+    useEffect(() => {
+
+        Promise.all([
+            orders.update(),
+            orders.updateCargoTypes()
+        ])
             .then(() => {
                 setIsLoading(false);
             });
+
     },[])
 
     const loadingPage = <>

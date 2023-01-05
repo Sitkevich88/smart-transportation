@@ -23,6 +23,10 @@ const serverAPI = {
 
     get myOrders(){
         return `${this._origin}/user/orders`;
+    },
+
+    get cargoTypes(){
+        return `${this._origin}/user/cargo/types`;
     }
 };
 
