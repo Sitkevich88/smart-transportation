@@ -10,6 +10,9 @@ import CreateOrderPage from "./CreateOrderPage";
 import CustomerRoute from "./protected/CustomerRoute";
 import mapStorage from "./service/MapUpdater";
 import BigLogo from "./BigLogo";
+import AdminRoute from "./protected/AdminRoute";
+import AdminMainPage from "./admin/AdminMainPage";
+import AdminOrdersPage from "./admin/AdminOrdersPage";
 
 const App = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -40,6 +43,11 @@ const App = () => {
                     <Route path="/orders" element={<OrdersPage />} />
                     <Route path="/addorder" element={<CreateOrderPage />} />
                     <Route path="/profile" element={<ProfilePage />} />
+                </Route>
+
+                <Route path="/admin" element={<AdminRoute/>}>
+                    <Route path="/admin/main" element={<AdminMainPage/>} />
+                    <Route path="/admin/orders" element={<AdminOrdersPage/>} />
                 </Route>
             </Routes>
         </BrowserRouter>;

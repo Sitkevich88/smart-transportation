@@ -13,10 +13,14 @@ const SignInForm = () => {
         setErrorMessage('');
         authenticationService.signIn(credentials)
             .then(response => {
-                if (response.success)
-                    navigate('/main');
-                else
+                if (response.success){
+                    if (authenticationService.getRole() === 'ADMIN')
+                        navigate('/admin/main');
+                    else
+                        navigate('/main');
+                }else{
                     setErrorMessage(response.errorMessage);
+                }
             });
     };
     const goToRegistrationPage = () => navigate('/registration');

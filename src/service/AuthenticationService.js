@@ -67,17 +67,17 @@ class AuthenticationService{
         localStorage.setItem('role', role);
     }
 
-    #getRole(){
+    getRole(){
         return localStorage.getItem('role') ?? "";
     }
 
     seemToBeCustomer(){
-        return this.#getRole() === Role.Customer
+        return this.getRole() === Role.Customer
             && this.hasJWT();
     }
 
     seemToBeAdmin(){
-        return this.#getRole() === Role.Admin
+        return this.getRole() === Role.Admin
             && this.hasJWT();
     }
 
