@@ -1,6 +1,7 @@
 import {makeAutoObservable} from "mobx";
 import ordersService from "../service/OrdersService";
 import mapService from "../service/MapService";
+import ordersHelper from "../helpers/OrdersHelper";
 
 class Orders {
     activeOrders = []
@@ -29,7 +30,7 @@ class Orders {
             .getOrders()
             .then(orders => {
                 const receivedOrders = orders.map(order => {
-                    return this.convertServerOrder(order);
+                    return ordersHelper.convertServerOrder(order);
                 });
                 this.activeOrders = receivedOrders.filter(order => order.status !== 'В архиве');
                 this.oldOrders = receivedOrders.filter(order => order.status === 'В архиве');
@@ -57,37 +58,10 @@ class Orders {
             .addOrder(request)
             .then(newOrder => {
                 this.activeOrders.unshift(
-                    this.convertServerOrder(newOrder)
+                    ordersHelper.convertServerOrder(newOrder)
                 );
             });
     }
-
-    convertServerDate(date){
-        const monthsInGenitive = [
-            'января', 'февраля', 'марта', 'апреля',
-            'мая', 'июня', 'июля', 'августа',
-            'сентября', 'октября', 'ноября', 'декабря'
-        ]
-        const [year, monthNumber, day] = date.split('-');
-
-        return `${day} ${ monthsInGenitive[monthNumber - 1] ?? "??" } ${year} г.`;
-    }
-
-    convertServerOrder(order){
-        return {
-            id: order.id,
-            creationDate: this.convertServerDate(order.creationDate),
-            from: mapService.getStationNameById(order.station1),
-            to: mapService.getStationNameById(order.station2),
-            cargoType: order.cargoType,
-            weight: order.weight,
-            dispatchDate: null,
-            receiptDate: null,
-            status: order.status,
-            comment: order.comment
-        };
-    }
-
 }
 
 export default new Orders();

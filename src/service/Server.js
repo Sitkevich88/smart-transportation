@@ -31,6 +31,14 @@ const serverAPI = {
 
     get cargoTypes(){
         return `${this._origin}/user/cargo/types`;
+    },
+
+    get ordersForAdmin(){
+        return `${this._origin}/admin/orders`;
+    },
+
+    get changeOrderStatus() {
+        return `${this._origin}/admin/order/status/change`;
     }
 };
 
