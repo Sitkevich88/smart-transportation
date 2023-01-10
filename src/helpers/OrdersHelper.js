@@ -34,7 +34,8 @@ class OrdersHelper{
             dispatchDate: null,
             receiptDate: null,
             status: order.status,
-            comment: order.comment
+            comment: order.comment,
+            price: order.price
         };
     }
 

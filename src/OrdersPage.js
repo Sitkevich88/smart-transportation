@@ -12,6 +12,11 @@ const OrdersPage = (props) => {
     const [displayActiveOrders, setDisplayActiveOrders] = useState(true);
     const navigate = useNavigate();
     const [isPopUpOpened, setIsPopUpOpened] = useState(false);
+    const [price, setPrice] = useState(false);
+    const openPopUp = (price1) => {
+        setPrice(price1)
+        setIsPopUpOpened(true);
+    };
     useEffect(()=>{
         orders.update();
     }, []);
@@ -58,14 +63,14 @@ const OrdersPage = (props) => {
                         <p>Комментарий: {order.comment ?? '--'}</p>
                         <p>Статус: {order.status}</p>
                         {order.status === 'Ожидает оплаты'
-                            ? <p className={styles.popUpOpener} onClick={() => setIsPopUpOpened(true)}>Открыть реквизиты</p>
+                            ? <p className={styles.popUpOpener} onClick={() => openPopUp(order.price)}>Открыть реквизиты</p>
                             : null
                         }
                     </div>
                 </div>);
             })}
         </div>
-        <PaymentPopUp display={isPopUpOpened} open={setIsPopUpOpened}/>
+        <PaymentPopUp display={isPopUpOpened} open={setIsPopUpOpened} price={price}/>
         <div className={stylesStartPage.contacts}>
             <p className={stylesStartPage.comment}>Желаете связаться с оператором?</p>
             <p className={stylesStartPage.comment}>+7(911)222-33-44</p>

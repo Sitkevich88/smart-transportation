@@ -20,7 +20,7 @@ const PaymentPopUp = (props) => {
                 </div>
                 <div className={styles.fieldWithLabel}>
                     <span className={styles.label}>Сумма: </span>
-                    <span className={styles.field}>567,78</span>
+                    <span className={styles.field}>{props.price}</span>
                 </div>
             </div>
         </div>
