@@ -3,7 +3,7 @@ import {Role} from "../helpers/Role";
 import mapService from "./MapService";
 
 class AuthenticationService{
-     async signIn(credentials){
+    async signIn(credentials){
         const authentication = fetch(serverAPI.signIn, {
             method: 'POST',
             mode: 'cors',
@@ -39,6 +39,7 @@ class AuthenticationService{
                 return response.json().then(authenticationResponse => {
                     switch (response.status){
                         case 200:
+                            this.logout();
                             this.#setJWT(authenticationResponse.jwt);
                             this.#setRole(authenticationResponse.role);
                             return {success: true, errorMessage: null};

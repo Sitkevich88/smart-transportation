@@ -64,16 +64,16 @@ class OrdersHelper{
                 possibleStatusCodes.push(pending);
                 break
             case awaitingPayment:
-                possibleStatusCodes.push(...[rejected, awaitingDelivery]);
+                possibleStatusCodes.push(awaitingDelivery);
                 break
             case awaitingDelivery:
-                possibleStatusCodes.push(...[rejected, beingDelivered]);
+                possibleStatusCodes.push(beingDelivered);
                 break
             case beingDelivered:
-                possibleStatusCodes.push(...[rejected, awaitingDelivery, arrived]);
+                possibleStatusCodes.push(arrived);
                 break
             case arrived:
-                possibleStatusCodes.push(...[rejected, archived]);
+                possibleStatusCodes.push(archived);
                 break
             default:
                 possibleStatusCodes.push(rejected);
