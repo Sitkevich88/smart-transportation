@@ -1,6 +1,7 @@
-import {makeAutoObservable} from "mobx";
+import {makeAutoObservable, observable} from "mobx";
 
 class Orders {
+
     activeOrders = [
         {
             id: 5686,
@@ -113,6 +114,13 @@ class Orders {
         });
     }
 
+    sortFromNewToOld() {
+        this.activeOrders.sort((a, b) => b.id - a.id);
+    }
+
+    sortFromOldToNew() {
+        this.activeOrders.sort((a, b) => a.id - b.id);
+    }
 }
 
 export default new Orders();

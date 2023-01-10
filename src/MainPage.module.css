@@ -92,3 +92,27 @@
 .addOrderButton:hover{
     background-color: rgba(28, 18, 219, 0.85);
 }
+
+.mapWrapper{
+    display: grid;
+}
+
+.overlay{
+    width: 630px;
+    height: 440px;
+    grid-area: 1 / 1;
+    margin: 25px auto 0 auto;
+    border-radius: 15px;
+}
+
+.banner{
+    position: center;
+    width: fit-content;
+    padding-left: 8px;
+    padding-right: 8px;
+    margin: 0 auto 0 auto;
+    background-color: rgba(255, 142, 199, 0.6);
+    color: black;
+    font-family: Inter;
+    font-weight: 700;
+}

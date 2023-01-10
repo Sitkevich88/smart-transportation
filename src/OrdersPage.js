@@ -32,6 +32,14 @@ const OrdersPage = (props) => {
                 Архив заявок
             </button>
         </div>
+        <div className={styles.filters}>
+            <div className={styles.filter} onClick={() => {
+                orders.sortFromNewToOld(); //not working
+            }}>От нового к старому</div>
+            <div className={styles.filter} onClick={() => {
+                orders.sortFromOldToNew(); //not working
+            }}>От старого к новому</div>
+        </div>
         {displayActiveOrders && <button className={styles.addOrder} onClick={() => navigate('/main')}>
             <span className={styles.addOrderLogo}>+</span>
             <span className={styles.addOrderText}>Создать заявку</span>

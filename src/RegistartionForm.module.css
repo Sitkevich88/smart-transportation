@@ -75,7 +75,7 @@
 }
 
 .visibleField::placeholder{
-    color: #860a18;
+    color: rgba(141, 45, 55, 0.8);
 }
 
 .bottom{
