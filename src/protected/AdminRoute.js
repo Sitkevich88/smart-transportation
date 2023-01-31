@@ -6,12 +6,18 @@ import BigLogo from "../BigLogo";
 
 const AdminRoute = () => {
     const [isLoading, setIsLoading] = useState(true);
+    const [loadingText, setLoadingText] = useState(null);
 
     useEffect(() => {
-        Promise.all([
-            adminOrders.update()
-        ])
+        setTimeout(() => {
+            if (isLoading)
+                setLoadingText('Сервер не отвечает :(');
+        }, 3000);
+
+        adminOrders
+            .update()
             .then(() => {
+                setLoadingText(null);
                 setIsLoading(false);
             });
 
@@ -20,7 +26,7 @@ const AdminRoute = () => {
     const loadingPage = <>
         <BigLogo/>
         <div style={{textAlign: "center", fontSize: "50px", marginTop: "50px", fontFamily: "Inter"}}>
-            Загрузка...
+            {loadingText ?? 'Загрузка...'}
         </div>
     </>;
 

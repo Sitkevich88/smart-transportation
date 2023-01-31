@@ -10,7 +10,6 @@ import orders from "./store/Orders";
 const CreateOrderPage = () => {
     const navigate = useNavigate();
     const { register, formState: { errors }, handleSubmit } = useForm();
-    let {station1, station2} = [null, null];
     const onSubmit = data => {
         orders.addOrder(data).then(() => navigate('/orders'));
     };
@@ -19,20 +18,14 @@ const CreateOrderPage = () => {
     });
 
     stationsOptions.unshift(
-        <option disabled selected value={null} style={{display: "none"}}></option>
+        <option disabled key="null" value="" style={{display: "none"}}></option>
     );
 
     const stations = qs.parse(window.location.search);
-
-    if (!!stations.station1){
-        station1 = stations.station1;
-    }
-    if (!!stations.station2){
-        station2 = stations.station2;
-    }
+    const [station1, station2] = [stations.station1, stations.station2];
 
     const types = [
-        <option disabled selected value style={{display: "none"}} key="empty"></option>
+        <option disabled key="null" value="" style={{display: "none"}}></option>
     ];
 
     types.push(...orders.cargoTypes.map(cargoType => {
@@ -89,6 +82,7 @@ const CreateOrderPage = () => {
                         <select {...register("type", { required: true })}
                                 aria-invalid={errors.type ? "true" : "false"}
                                 className={styles.inputField}
+                                defaultValue={''}
                         >
                             {types}
                         </select>

@@ -9,14 +9,15 @@ import Map from "./Map";
 import PaymentPopUp from "./PaymentPopUp";
 
 const OrdersPage = (props) => {
-    const [displayActiveOrders, setDisplayActiveOrders] = useState(true);
     const navigate = useNavigate();
+    const [displayActiveOrders, setDisplayActiveOrders] = useState(true);
     const [isPopUpOpened, setIsPopUpOpened] = useState(false);
     const [price, setPrice] = useState(false);
     const openPopUp = (price1) => {
         setPrice(price1)
         setIsPopUpOpened(true);
     };
+
     useEffect(()=>{
         orders.update();
     }, []);

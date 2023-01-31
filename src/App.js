@@ -16,11 +16,18 @@ import AdminOrdersPage from "./admin/AdminOrdersPage";
 
 const App = () => {
     const [isLoading, setIsLoading] = useState(true);
+    const [loadingText, setLoadingText] = useState(null);
 
-    useEffect(()=>{
+    useEffect(() => {
+        setTimeout(() => {
+            if (isLoading)
+                setLoadingText('Сервер не отвечает :(');
+        }, 3000);
+
         mapStorage
             .update()
             .then(() => {
+                setLoadingText(null);
                 setIsLoading(false);
             });
     },[])
@@ -29,7 +36,7 @@ const App = () => {
         ? <>
             <BigLogo/>
             <div style={{textAlign: "center", fontSize: "50px", marginTop: "50px", fontFamily: "Inter"}}>
-                Загрузка...
+                {loadingText ?? 'Загрузка...'}
             </div>
         </>
         : <BrowserRouter>

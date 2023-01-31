@@ -8,14 +8,15 @@ import stylesStartPage from "./StartPage.module.css";
 
 const MainPage = () => {
     const navigate = useNavigate();
-    const stationsOptions = mapService.getUniqueStationNames().map(name => {
-        return <option key={name + '_stationName'}>{name}</option>;
-    });
-    stationsOptions.unshift(
-        <option disabled selected value style={{display: "none"}}></option>
-    );
     const [station1, setStation1] = useState(null);
     const [station2, setStation2] = useState(null);
+    let stationsOptions = mapService.getUniqueStationNames().map(name => {
+        return <option key={name + '_stationName'}>{name}</option>;
+    });
+
+    stationsOptions.push(
+        <option disabled key="null" value="" style={{display: "none"}}></option>
+    );
 
     return <>
         <CustomerHeader buttonId={1}/>
@@ -30,6 +31,7 @@ const MainPage = () => {
                 <span className={styles.searchFieldLabel}>От</span>
                 <select className={styles.searchField}
                         onChange={e => setStation1(e.target.value)}
+                        defaultValue={''}
                 >
                     {stationsOptions}
                 </select>
@@ -38,6 +40,7 @@ const MainPage = () => {
                 <span className={styles.searchFieldLabel}>До</span>
                 <select className={styles.searchField}
                         onChange={e => setStation2(e.target.value)}
+                        defaultValue={''}
                 >
                     {stationsOptions}
                 </select>
